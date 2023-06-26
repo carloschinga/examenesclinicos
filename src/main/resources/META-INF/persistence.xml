@@ -9,15 +9,11 @@
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value=""/>-->
-      
-      
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://192.168.0.97\INTEGRACION:1433;databaseName=LOLCLI9000_DEV"/>
-        <property name="javax.persistence.jdbc.user" value="desarrollo"/>
-        <property name="javax.persistence.jdbc.password" value="De$@sb23"/>
-        <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-        <property name="eclipselink.cache.shared.default" value="false"/>
-      
-      
+      <property name="javax.persistence.jdbc.user" value="desarrollo"/>
+      <property name="javax.persistence.jdbc.password" value="De$@sb23"/>
+      <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+      <property name="eclipselink.cache.shared.default" value="false"/>
     </properties>
   </persistence-unit>
 </persistence>

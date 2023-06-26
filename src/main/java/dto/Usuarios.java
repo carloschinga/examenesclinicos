@@ -15,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,14 +24,15 @@ import javax.validation.constraints.Size;
  * @author USUARIO
  */
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuarios", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"usepas", "usenam"})})
 @NamedQueries({
     @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
     @NamedQuery(name = "Usuarios.findByUsecod", query = "SELECT u FROM Usuarios u WHERE u.usecod = :usecod"),
     @NamedQuery(name = "Usuarios.findByUsepas", query = "SELECT u FROM Usuarios u WHERE u.usepas = :usepas"),
+    @NamedQuery(name = "Usuarios.validar", query = "SELECT u FROM Usuarios u WHERE u.usesgl = :usesgl and u.passweb = :passweb"),
     @NamedQuery(name = "Usuarios.findByUsenam", query = "SELECT u FROM Usuarios u WHERE u.usenam = :usenam"),
     @NamedQuery(name = "Usuarios.findByUseusr", query = "SELECT u FROM Usuarios u WHERE u.useusr = :useusr"),
-    @NamedQuery(name = "Usuarios.validar", query = "SELECT u FROM Usuarios u WHERE u.usesgl = :usesgl and u.passweb = :passweb"),
     @NamedQuery(name = "Usuarios.findByUsesgl", query = "SELECT u FROM Usuarios u WHERE u.usesgl = :usesgl"),
     @NamedQuery(name = "Usuarios.findByEstado", query = "SELECT u FROM Usuarios u WHERE u.estado = :estado"),
     @NamedQuery(name = "Usuarios.findByFeccre", query = "SELECT u FROM Usuarios u WHERE u.feccre = :feccre"),
@@ -45,95 +47,98 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Usuarios.findByUsediacpass", query = "SELECT u FROM Usuarios u WHERE u.usediacpass = :usediacpass"),
     @NamedQuery(name = "Usuarios.findByFecumvpass", query = "SELECT u FROM Usuarios u WHERE u.fecumvpass = :fecumvpass"),
     @NamedQuery(name = "Usuarios.findByUsereqcpass", query = "SELECT u FROM Usuarios u WHERE u.usereqcpass = :usereqcpass"),
-    @NamedQuery(name = "Usuarios.findByPassweb", query = "SELECT u FROM Usuarios u WHERE u.passweb = :passweb")})
+    @NamedQuery(name = "Usuarios.findByPassweb", query = "SELECT u FROM Usuarios u WHERE u.passweb = :passweb"),
+    @NamedQuery(name = "Usuarios.findByAdmiweb", query = "SELECT u FROM Usuarios u WHERE u.admiweb = :admiweb")})
 public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "usecod")
+    @Column(name = "usecod", nullable = false)
     private Integer usecod;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 6)
-    @Column(name = "usepas")
+    @Column(name = "usepas", nullable = false, length = 6)
     private String usepas;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "usenam")
+    @Column(name = "usenam", nullable = false, length = 30)
     private String usenam;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
-    @Column(name = "useusr")
+    @Column(name = "useusr", nullable = false, length = 10)
     private String useusr;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)
-    @Column(name = "usesgl")
+    @Column(name = "usesgl", nullable = false, length = 3)
     private String usesgl;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
-    @Column(name = "estado")
+    @Column(name = "estado", nullable = false, length = 1)
     private String estado;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "feccre")
+    @Column(name = "feccre", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date feccre;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fecumv")
+    @Column(name = "fecumv", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecumv;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "usecodx")
+    @Column(name = "usecodx", nullable = false)
     private int usecodx;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "usenamx")
+    @Column(name = "usenamx", nullable = false, length = 30)
     private String usenamx;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "hostname")
+    @Column(name = "hostname", nullable = false, length = 20)
     private String hostname;
     @Size(max = 20)
-    @Column(name = "usefor")
+    @Column(name = "usefor", length = 20)
     private String usefor;
     @Size(max = 15)
-    @Column(name = "usedoc")
+    @Column(name = "usedoc", length = 15)
     private String usedoc;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "usepassx")
+    @Column(name = "usepassx", nullable = false, length = 100)
     private String usepassx;
     @Size(max = 80)
-    @Column(name = "usefir")
+    @Column(name = "usefir", length = 80)
     private String usefir;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "usediacpass")
+    @Column(name = "usediacpass", nullable = false)
     private int usediacpass;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fecumvpass")
+    @Column(name = "fecumvpass", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecumvpass;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
-    @Column(name = "usereqcpass")
+    @Column(name = "usereqcpass", nullable = false, length = 1)
     private String usereqcpass;
-    @Size(max = 50)
-    @Column(name = "passweb")
+    @Size(max = 70)
+    @Column(name = "passweb", length = 70)
     private String passweb;
+    @Column(name = "admiweb")
+    private Integer admiweb;
 
     public Usuarios() {
     }
@@ -310,6 +315,14 @@ public class Usuarios implements Serializable {
 
     public void setPassweb(String passweb) {
         this.passweb = passweb;
+    }
+
+    public Integer getAdmiweb() {
+        return admiweb;
+    }
+
+    public void setAdmiweb(Integer admiweb) {
+        this.admiweb = admiweb;
     }
 
     @Override

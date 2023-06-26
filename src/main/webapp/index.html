@@ -53,11 +53,11 @@
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user"
                                                        id="txtUsuario" 
-                                                       placeholder="Ingrese su usuario..." value="CES">
+                                                       placeholder="Ingrese su usuario..." value="">
                                             </div>
                                             <div class="form-group">
                                                 <input type="password" class="form-control form-control-user"
-                                                       id="txtClave" placeholder="Clave" value="CES">
+                                                       id="txtClave" placeholder="Clave" value="">
                                             </div>                                                  
                                             <a id="btnIngresar" class="btn btn-primary btn-user ">
                                                 Inicio de Sesión
@@ -98,14 +98,11 @@
                     let pass = $("#txtClave").val();                    
                     let parametro = {logi: logi, pass: pass};
                     $.getJSON("validar", parametro, function (data) {
-                        if (data.resultado === "ok") {                           
-                            if (window.sessionStorage) {
-                                sessionStorage.setItem("logueado", 1);
-                                sessionStorage.setItem("logi", data.user);
-                                sessionStorage.setItem("nombre", data.name);                                
-                            } else {
-                                throw new Error('Tu Browser no soporta sessionStorage!');
-                            }
+                        if (data.resultado === "ok") {                                                       
+                            parametro = {logi: data.user,nombre: data.name,nivel:data.nivel};
+                            $.getJSON("iniciarsesion", parametro, function (data) {
+                                
+                            }); 
                             $(location).attr('href', "principal.html");
                         } else {
                             $("#alerta").css('visibility', 'visible');
