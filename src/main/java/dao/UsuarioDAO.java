@@ -55,8 +55,8 @@ public class UsuarioDAO {
     public static Usuarios buscarPorLogi(String usuario) {
         try {
             EntityManager em = getEntity().createEntityManager();
-            Query q = em.createNamedQuery("Usuarios.findByUseusr");
-            q.setParameter("useusr", usuario);
+            Query q = em.createNamedQuery("Usuarios.findByUsesgl");
+            q.setParameter("usesgl", usuario);
             Usuarios pers = (Usuarios) q.getSingleResult();
             return pers;
         } catch (NoResultException e) {

@@ -38,11 +38,11 @@ public class Validar extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String user = request.getParameter("logi");
             String pass = request.getParameter("pass");
-            pass = Cripto.toHexString(getSHA(pass));
+            pass = Cripto.toHexString(getSHA(pass.toUpperCase()));
             if (!pass.trim().equals("")) {
                 Usuarios u = UsuarioDAO.logueo(user, pass);
                 if (u != null) {
-                    out.println("{\"resultado\":\"ok\",\"user\":\"" + u.getUseusr() + "\",\"name\":\"" + u.getUsenam() + "\"}");
+                    out.println("{\"resultado\":\"ok\",\"user\":\"" + u.getUsesgl() + "\",\"name\":\"" + u.getUsenam() + "\"}");
                 } else {
                     out.println("{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}");
                 }

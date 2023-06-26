@@ -40,8 +40,8 @@ public class CambiarClave extends HttpServlet {
             String logi = request.getParameter("logi");
             String claveActual = request.getParameter("claveActual");
             String nuevaClave = request.getParameter("nuevaClave");
-            claveActual=Cripto.toHexString(getSHA(claveActual));
-            nuevaClave=Cripto.toHexString(getSHA(nuevaClave));
+            claveActual=Cripto.toHexString(getSHA(claveActual.toUpperCase()));
+            nuevaClave=Cripto.toHexString(getSHA(nuevaClave.toUpperCase()));
             
             Usuarios usuario= UsuarioDAO.buscarPorLogi(logi);            
             if(!usuario.getPassweb().equals(claveActual)){
