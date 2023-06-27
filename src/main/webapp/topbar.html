@@ -394,8 +394,8 @@
                     ajax: 'listausuario',
                     columns: [
                         {data: 'usenam'},
-                        {data: 'usesgl'},
-                        {data: 'usesgl',
+                        {data: 'useusr'},
+                        {data: 'useusr',
                             render: function (data, type, row, meta) {
                                 let fila = meta.row;
                                 let botones = `
@@ -417,12 +417,12 @@
             }
         });
         $("#GrabarCambiarClave").click(function () {
-            let logi = sessionStorage.getItem("logi");
+            //let logi = sessionStorage.getItem("logi");
             let claveActual = $("#txtClaveActual").val();
             let nuevaClave = $("#txtNuevaClave").val();
             let confirmaClave = $("#txtConfirmaClave").val();
             if (nuevaClave === confirmaClave) {
-                let parametro = {logi: logi, claveActual: claveActual, nuevaClave: nuevaClave};
+                let parametro = {claveActual: claveActual, nuevaClave: nuevaClave};
                 $.getJSON("cambiarclave", parametro, function (data) {
                     if (data.resultado === "ok") {
                         $("#passwordChangeModal").modal('hide');

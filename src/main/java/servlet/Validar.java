@@ -42,7 +42,7 @@ public class Validar extends HttpServlet {
             if (!pass.trim().equals("")) {
                 Usuarios u = UsuarioDAO.logueo(user, pass);
                 if (u != null) {
-                    out.println("{\"resultado\":\"ok\",\"user\":\"" + u.getUsesgl() + "\",\"name\":\"" + u.getUsenam() + "\",\"nivel\":\""+u.getAdmiweb()+"\"}");
+                    out.println("{\"resultado\":\"ok\",\"user\":\"" + u.getUseusr()+ "\",\"name\":\"" + u.getUsenam() + "\",\"nivel\":\""+u.getAdmiweb()+"\"}");
                 } else {
                     out.println("{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}");
                 }

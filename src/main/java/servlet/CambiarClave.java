@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import util.Cripto;
 import static util.Cripto.getSHA;
 
@@ -37,24 +38,25 @@ public class CambiarClave extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String logi = request.getParameter("logi");
+            //String logi = request.getParameter("logi");
             String claveActual = request.getParameter("claveActual");
             String nuevaClave = request.getParameter("nuevaClave");
-            claveActual=Cripto.toHexString(getSHA(claveActual.toUpperCase()));
-            nuevaClave=Cripto.toHexString(getSHA(nuevaClave.toUpperCase()));
-            
-            Usuarios usuario= UsuarioDAO.buscarPorLogi(logi);            
-            if(!usuario.getPassweb().equals(claveActual)){
+            claveActual = Cripto.toHexString(getSHA(claveActual.toUpperCase()));
+            nuevaClave = Cripto.toHexString(getSHA(nuevaClave.toUpperCase()));
+
+            HttpSession session = request.getSession(true);
+            String logi = session.getAttribute("logi").toString();
+            Usuarios usuario = UsuarioDAO.buscarPorLogi(logi);
+            if (!usuario.getPassweb().equals(claveActual)) {
                 out.println("{\"resultado\":\"error\",\"mensaje\":\"La Clave actual no es la correcta\"}");
-            }else{
+            } else {
                 usuario.setPassweb(nuevaClave);
-                if(UsuarioDAO.modificar(usuario)){
+                if (UsuarioDAO.modificar(usuario)) {
                     out.println("{\"resultado\":\"ok\"}");
-                }
-                else{
+                } else {
                     out.println("{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}");
                 }
-            }            
+            }
         } catch (NoSuchAlgorithmException ex) {
             System.out.println("{\"resultado\":\"error\",\"mensaje\":\"" + ex.getMessage() + "\"}");
         }

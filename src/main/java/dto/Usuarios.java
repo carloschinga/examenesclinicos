@@ -30,7 +30,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
     @NamedQuery(name = "Usuarios.findByUsecod", query = "SELECT u FROM Usuarios u WHERE u.usecod = :usecod"),
     @NamedQuery(name = "Usuarios.findByUsepas", query = "SELECT u FROM Usuarios u WHERE u.usepas = :usepas"),
-    @NamedQuery(name = "Usuarios.validar", query = "SELECT u FROM Usuarios u WHERE u.usesgl = :usesgl and u.passweb = :passweb"),
+    @NamedQuery(name = "Usuarios.validar", query = "SELECT u FROM Usuarios u WHERE u.useusr = :useusr and u.passweb = :passweb and u.estado='S'"),
     @NamedQuery(name = "Usuarios.findByUsenam", query = "SELECT u FROM Usuarios u WHERE u.usenam = :usenam"),
     @NamedQuery(name = "Usuarios.findByUseusr", query = "SELECT u FROM Usuarios u WHERE u.useusr = :useusr"),
     @NamedQuery(name = "Usuarios.findByUsesgl", query = "SELECT u FROM Usuarios u WHERE u.usesgl = :usesgl"),

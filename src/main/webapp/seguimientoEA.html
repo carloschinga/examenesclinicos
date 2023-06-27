@@ -112,21 +112,21 @@
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
          <script>
-            $(document).ready(function () {
-                if (window.sessionStorage) {
-                    let logueado = sessionStorage.getItem("logueado");
-                    if (logueado === null) {
+           $(document).ready(function () {                
+                $.getJSON("validarsesion", function (data) {
+                    console.log("valido sesion");
+                    console.log(data);
+                    if (data.resultado === "ok") {
+                        $('#topbar').load('topbar.html');
+                        $('#sidebar').load('sidebar.html');
+                    } else {
+                        console.log("redireccionar");
                         $(location).attr('href', "index.html");
                     }
-                } else {
-                    throw new Error('Tu Browser no soporta sessionStorage!');
-                }
-
-                $('#topbar').load('topbar.html');
-                $('#sidebar').load('sidebar.html');
+                });
 
                 $("#salir").click(function () {
-                    sessionStorage.removeItem("logueado");
+                    $.getJSON("cerrarsesion", function (data) {});
                     $(location).attr('href', "index.html");
                 });
             });

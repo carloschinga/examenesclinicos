@@ -36,7 +36,7 @@ public class UsuarioDAO {
         try {
             EntityManager em = getEntity().createEntityManager();
             Query q = em.createNamedQuery("Usuarios.validar");
-            q.setParameter("usesgl", usuario);
+            q.setParameter("useusr", usuario);
             q.setParameter("passweb", clave);
             Usuarios pers = (Usuarios) q.getSingleResult();
             return pers;
@@ -55,8 +55,8 @@ public class UsuarioDAO {
     public static Usuarios buscarPorLogi(String usuario) {
         try {
             EntityManager em = getEntity().createEntityManager();
-            Query q = em.createNamedQuery("Usuarios.findByUsesgl");
-            q.setParameter("usesgl", usuario);
+            Query q = em.createNamedQuery("Usuarios.findByUseusr");
+            q.setParameter("useusr", usuario);
             Usuarios pers = (Usuarios) q.getSingleResult();
             return pers;
         } catch (NoResultException e) {
