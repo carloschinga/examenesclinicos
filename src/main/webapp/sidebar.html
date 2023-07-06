@@ -26,20 +26,24 @@
     <div class="sidebar-heading">
         Examenes Laboratorio
     </div>
-    <li class="nav-item">
-        <a class="nav-link" href="dashboardLA.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Dashboard</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="seguimientoLA.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Seguimiento</span></a>
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item" id="AnalisisLA">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
+           aria-expanded="true" aria-controls="collapseOne">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Analisis</span>
+        </a>
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">                
+                <a class="collapse-item" href="dashboardLA.html">Dashboard</a>
+                <a class="collapse-item" href="seguimientoLA.html">Seguimiento</a>
+            </div>
+        </div>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="detalleLA.html">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Detalle</span></a>
+            <span>Seguimiento</span></a>
     </li>
 
 
@@ -50,20 +54,23 @@
     <div class="sidebar-heading">        
         Examenes Auxiliares
     </div>
+    <li class="nav-item" id="AnalisisEA">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+           aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Analisis</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">                
+                <a class="collapse-item" href="dashboardEA.html">Dashboard</a>
+                <a class="collapse-item" href="seguimientoEA.html">Seguimiento</a>
+            </div>
+        </div>
+    </li>    
     <li class="nav-item">
-        <a class="nav-link" href="dashboardEA.html">
+        <a class="nav-link" href="detalleEA1.html">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Dashboard</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Auxiliares</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="detalleEA.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Auxiliares</span></a>
+            <span>Seguimiento</span></a>
     </li>
 
     <!-- Divider -->
@@ -77,3 +84,15 @@
 
 
 </ul>
+<script>
+    $(document).ready(function () {
+        $.getJSON("validarsesion", function (data) {
+            if (data.resultado === "ok") {
+                if (data.nivel !== "1") {
+                    $("#AnalisisEA").remove();
+                    $("#AnalisisLA").remove();                    
+                }
+            }
+        });
+    });
+</script>

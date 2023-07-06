@@ -14,3 +14,10 @@
   background-image: linear-gradient(180deg,#d1d3e2 10%,#dddfeb 100%);
   background-size: cover;
 }
+.tituloTexto {
+    color: #FFFFFF;
+    font-family: "Segoe UI";
+    font-weight: bold;
+    font-weight: 700; 
+    /*font-size: 35px;*/  
+}
