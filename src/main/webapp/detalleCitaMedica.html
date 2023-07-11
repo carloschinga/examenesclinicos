@@ -51,7 +51,7 @@
                     <div class="container-fluid">
                         <div class="card">                            
                             <div class="card-body">
-                                <center> <h5 class="card-title">SEGUIMIENTO DE EXAMENES DE LABORATORIO</h5></center>
+                                <center> <h5 class="card-title">SEGUIMIENTO DE CITAS MEDICAS</h5></center>
                                 <!--<center><div class="tituloTexto"></div></center>-->
 
                                 <div class="col">
@@ -70,16 +70,18 @@
                                                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                                                     <thead>
                                                         <tr>
-                                                            <th>Sec.</th>
-                                                            <!--<th>Historia</th>-->
+                                                            <th>Sec.</th>                                                            
                                                             <th>Paciente</th>
                                                             <th>Plan</th>
-                                                            <th>Examen</th>
-                                                            <th>Fecha Orden</th>
+                                                            <th>Servicio</th>
+                                                            <th>Tarifa</th>
+                                                            <th>Fecha Reserva</th>
+                                                            <th>Fecha Cita</th>
                                                             <th>Fecha Pago</th>
-                                                            <th>Fecha Examen</th>
-                                                            <th>Fecha Resultado</th>
-                                                            <th>Fecha Aprobado</th>
+                                                            <th>Fecha Asis. Paci.</th>
+                                                            <!--<th>Hora Aten.</th>-->
+                                                            <!--<th>Diagnostico1</th>
+                                                            <th>Diagnostico2</th>-->
                                                         </tr>
                                                     </thead>
                                                 </table>
@@ -173,11 +175,11 @@
                 table = $('#example').DataTable({
                     dom: 'Bfrtip',
                     buttons: [
-                        'copy',  'excel',  'print'
+                        'copy', 'excel', 'print'
                     ],
                     paging: false,
                     ajax: {
-                        url: 'listadetalleexamenla',
+                        url: 'listadetallecitamedica',
                         type: 'POST',
                         data: function (d) {
                             d.fechaInicio = $("#fechaInicio").val(), //$("#fechaInicio").val(),
@@ -206,16 +208,24 @@
                         aria: {
                             sortAscending: ": activate to sort column ascending",
                             sortDescending: ": activate to sort column descending"
-                        },
+                        }
                     },
                     columns: [
                         {data: 'secuencia'},
-                       /* {data: 'historia'},*/
                         {data: 'paciente'},
                         {data: 'tipoPlan'},
-                        {data: 'examen'},
+                        {data: 'servicio'},
+                        {data: 'tarifa'},
                         {
-                            data: 'fechaCreacion',
+                            data: 'fechaOrden',
+                            render: function (data, type, row, meta) {
+                                if (data === undefined)
+                                    return "";
+                                else
+                                    return moment(data).format("DD/MM/yyyy hh:mm:ss A");
+                            }
+                        },
+                        {data: 'fechaCita',
                             render: function (data, type, row, meta) {
                                 if (data === undefined)
                                     return "";
@@ -230,31 +240,19 @@
                                 else
                                     return moment(data).format("DD/MM/yyyy hh:mm:ss A");
                             }
-                        },
-                        {data: 'fechaTomaExamen',
+                        },{data: 'fechaLlegada',
                             render: function (data, type, row, meta) {
                                 if (data === undefined)
                                     return "";
                                 else
                                     return moment(data).format("DD/MM/yyyy hh:mm:ss A");
                             }
+                        }/*,{data: 'primeraHoraAtencion'
+                        }/*,
+                        {data: 'diagnostico1'
                         },
-                        {data: 'fechaResultado',
-                            render: function (data, type, row, meta) {
-                                if (data === undefined)
-                                    return "";
-                                else
-                                    return moment(data).format("DD/MM/yyyy hh:mm:ss A");
-                            }
-                        },
-                        {
-                            data: 'fechaAprobado',
-                            render: function (data, type, row, meta) {
-                                if (data === undefined)
-                                    return "";
-                                else
-                                    return moment(data).format("DD/MM/yyyy hh:mm:ss A");
-                            }}
+                        {data: 'diagnostico2'
+                        }*/
                     ]
                 });
                 $('#fechaInicio').change(function () {

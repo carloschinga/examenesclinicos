@@ -5,6 +5,8 @@
     <class>dto.PacientesWeb</class>
     <class>dto.ViewTrazabilidadLa</class>
     <class>dto.ViewTrazabilidadEa</class>
+    <class>dto.dto.ViewTrazabilidadCitaMedica</class>
+    <class>dto.ViewTrazabilidadCitaMedica</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://192.168.0.97\INTEGRACION:1433;databaseName=LOLCLI9000_DEV"/>
