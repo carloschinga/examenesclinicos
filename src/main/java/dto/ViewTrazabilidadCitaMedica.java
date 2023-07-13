@@ -29,12 +29,13 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "ViewTrazabilidadCitaMedica.findBySecuencia", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.secuencia = :secuencia"),
     @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByPreFactura", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.preFactura = :preFactura"),
     @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByPaciente", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.paciente = :paciente"),
+    @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByMedico", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.medico = :medico"),
     @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByTipoPlan", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.tipoPlan = :tipoPlan"),
-    @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByServicio", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.servicio = :servicio"),    
+    @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByServicio", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.servicio = :servicio"),
     @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByTarifa", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.tarifa = :tarifa"),
     @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByFechaOrden", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.fechaOrden = :fechaOrden"),
     @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByFechaFiltro", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.fechaFiltro = :fechaFiltro"),
-    @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByFechaFiltroBeetwen", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.fechaFiltro BETWEEN :startDate and :endDate "),
+    @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByFechaFiltroBeetwen", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.fechaFiltro BETWEEN :startDate and :endDate ORDER BY v.secuencia"),
     @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByFechaCita", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.fechaCita = :fechaCita"),
     @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByFechaPago", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.fechaPago = :fechaPago"),
     @NamedQuery(name = "ViewTrazabilidadCitaMedica.findByFechaLlegada", query = "SELECT v FROM ViewTrazabilidadCitaMedica v WHERE v.fechaLlegada = :fechaLlegada"),
@@ -57,6 +58,11 @@ public class ViewTrazabilidadCitaMedica implements Serializable {
     @Size(min = 1, max = 40)
     @Column(name = "Paciente")
     private String paciente;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 40)
+    @Column(name = "Medico")
+    private String medico;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 40)
@@ -129,6 +135,14 @@ public class ViewTrazabilidadCitaMedica implements Serializable {
 
     public void setPaciente(String paciente) {
         this.paciente = paciente;
+    }
+
+    public String getMedico() {
+        return medico;
+    }
+
+    public void setMedico(String medico) {
+        this.medico = medico;
     }
 
     public String getTipoPlan() {

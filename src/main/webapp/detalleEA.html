@@ -62,27 +62,33 @@
                                         <div class="col-2">
                                             Fecha Fin:<input id="fechaFin" type="date" class="form-control form-control-user">
                                         </div>
+                                        <div class="col-2"><div class="row">Buscar:</div>
+                                            <div class="row">
+                                                <div  class="dt-buttons">
+                                                    <button id="btnBuscar" class="dt-button buttons-copy buttons-html5">Buscar</button>
+                                                </div></div>
+                                        </div>                                        
                                     </div>       
-                                     <hr/>
+                                    <hr/>
                                     <div class="row">
                                         <div class="col">
                                             <div class="table-responsive">
-                                            <table id="example" class="table table-striped table-bordered" style="width:100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Sec.</th>
-                                                        <!--<th>Historia</th>-->
-                                                        <th>Paciente</th>
-                                                        <th>Plan</th>
-                                                        <th>Examen</th>
-                                                        <th>Fecha Orden</th>
-                                                        <th>Fecha Pago</th>
-                                                        <th>Fecha Examen</th>
-                                                        <th>Fecha Resultado</th>
-                                                        <th>Fecha Aprobado</th>
-                                                    </tr>
-                                                </thead>
-                                            </table>
+                                                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sec.</th>
+                                                            <!--<th>Historia</th>-->
+                                                            <th>Paciente</th>
+                                                            <th>Plan</th>
+                                                            <th>Examen</th>
+                                                            <th>Fecha Orden</th>
+                                                            <th>Fecha Pago</th>
+                                                            <th>Fecha Examen</th>
+                                                            <th>Fecha Resultado</th>
+                                                            <th>Fecha Aprobado</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -173,7 +179,7 @@
                 table = $('#example').DataTable({
                     dom: 'Bfrtip',
                     buttons: [
-                        'copy', 'excel',  'print'
+                        'copy', 'excel', 'print'
                     ],
                     paging: false,
                     ajax: {
@@ -216,7 +222,7 @@
                         {data: 'examen'},
                         {
                             data: 'fechaCreacion',
-                            render: function (data, type, row, meta) {                                
+                            render: function (data, type, row, meta) {
                                 if (data === undefined)
                                     return "";
                                 else
@@ -224,7 +230,7 @@
                             }
                         },
                         {data: 'fechaPago',
-                            render: function (data, type, row, meta) {                                
+                            render: function (data, type, row, meta) {
                                 if (data === undefined)
                                     return "";
                                 else
@@ -232,7 +238,7 @@
                             }
                         },
                         {data: 'fechaTomaExamen',
-                            render: function (data, type, row, meta) {                                
+                            render: function (data, type, row, meta) {
                                 if (data === undefined)
                                     return "";
                                 else
@@ -240,7 +246,7 @@
                             }
                         },
                         {data: 'fechaResultado',
-                            render: function (data, type, row, meta) {                                
+                            render: function (data, type, row, meta) {
                                 if (data === undefined)
                                     return "";
                                 else
@@ -249,7 +255,7 @@
                         },
                         {
                             data: 'fechaAprobado',
-                            render: function (data, type, row, meta) {                                
+                            render: function (data, type, row, meta) {
                                 if (data === undefined)
                                     return "";
                                 else
@@ -257,14 +263,17 @@
                             }}
                     ]
                 });
-                $('#fechaInicio').change(function () {
-                    $('#fechaFin').val($('#fechaInicio').val());
+                /*$('#fechaInicio').change(function () {
+                 $('#fechaFin').val($('#fechaInicio').val());
+                 table.ajax.reload( );
+                 });
+                 $('#fechaFin').change(function () {
+                 table.ajax.reload( );
+                 });*/
+                $("#btnBuscar").click(function () {                   
                     table.ajax.reload( );
+                   
                 });
-                $('#fechaFin').change(function () {
-                    table.ajax.reload( );
-                });
-
                 $("#salir").click(function () {
                     $.getJSON("cerrarsesion", function (data) {});
                     $(location).attr('href', "index.html");
