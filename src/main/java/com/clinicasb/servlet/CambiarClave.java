@@ -2,28 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package servlet;
+package com.clinicasb.servlet;
 
-import com.google.gson.Gson;
-import dao.ViewTrazabilidadCitaMedicaDAO;
-import dto.ViewTrazabilidadCitaMedica;
+import com.clinicasb.dao.UsuarioDAO;
+import com.clinicasb.dto.Usuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.security.NoSuchAlgorithmException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import com.clinicasb.util.Cripto;
+import static com.clinicasb.util.Cripto.getSHA;
 
 /**
  *
  * @author USUARIO
  */
-@WebServlet(name = "ListaDetalleCitaMedica", urlPatterns = {"/listadetallecitamedica"})
-public class ListaDetalleCitaMedica extends HttpServlet {
+@WebServlet(name = "CambiarClave", urlPatterns = {"/cambiarclave"})
+public class CambiarClave extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,23 +38,27 @@ public class ListaDetalleCitaMedica extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            //String logi = request.getParameter("logi");
+            String claveActual = request.getParameter("claveActual");
+            String nuevaClave = request.getParameter("nuevaClave");
+            claveActual = Cripto.toHexString(getSHA(claveActual.toUpperCase()));
+            nuevaClave = Cripto.toHexString(getSHA(nuevaClave.toUpperCase()));
 
-            String fechaInicio = request.getParameter("fechaInicio");
-            String fechaFin = request.getParameter("fechaFin");
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-            Date filtroInicio = null, filtroFin = null;
-            try {
-                filtroInicio = formato.parse(fechaInicio);
-                filtroFin = formato.parse(fechaFin);
-                List<ViewTrazabilidadCitaMedica> lista = ViewTrazabilidadCitaMedicaDAO.listar(filtroInicio, filtroFin);
-                Gson g = new Gson();
-                String resultado = g.toJson(lista);
-                resultado = "{\"data\":" + resultado + "}";
-                out.print(resultado);
-            } catch (Exception ex) {
-                String resultado = "{\"data\":}";
-                out.println(resultado);
+            HttpSession session = request.getSession(true);
+            String logi = session.getAttribute("logi").toString();
+            Usuarios usuario = UsuarioDAO.buscarPorLogi(logi);
+            if (!usuario.getPassweb().equals(claveActual)) {
+                out.println("{\"resultado\":\"error\",\"mensaje\":\"La Clave actual no es la correcta\"}");
+            } else {
+                usuario.setPassweb(nuevaClave);
+                if (UsuarioDAO.modificar(usuario)) {
+                    out.println("{\"resultado\":\"ok\"}");
+                } else {
+                    out.println("{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}");
+                }
             }
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("{\"resultado\":\"error\",\"mensaje\":\"" + ex.getMessage() + "\"}");
         }
     }
 

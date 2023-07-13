@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package servlet;
+package com.clinicasb.servlet;
 
+import com.clinicasb.dao.UsuarioDAO;
+import com.clinicasb.dto.Usuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -11,14 +13,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import com.clinicasb.util.Cripto;
+import static com.clinicasb.util.Cripto.getSHA;
 
 /**
  *
  * @author USUARIO
  */
-@WebServlet(name = "IniciarSesion", urlPatterns = {"/iniciarsesion"})
-public class IniciarSesion extends HttpServlet {
+@WebServlet(name = "validar", urlPatterns = {"/validar"})
+public class Validar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,17 +36,24 @@ public class IniciarSesion extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String logi = request.getParameter("logi");
-            String nombre = request.getParameter("nombre");
-            String nivel = request.getParameter("nivel");
-
-            HttpSession session = request.getSession(true);
-            session.setAttribute("logueado", "1");
-            session.setAttribute("logi", logi);
-            session.setAttribute("nombre", nombre);
-            session.setAttribute("nivel", nivel);
+            String user = request.getParameter("logi");
+            String pass = request.getParameter("pass");
+            pass = Cripto.toHexString(getSHA(pass.toUpperCase()));
+            if (!pass.trim().equals("")) {
+                Usuarios u = UsuarioDAO.logueo(user, pass);
+                if (u != null) {
+                    out.println("{\"resultado\":\"ok\",\"user\":\"" + u.getUseusr()+ "\",\"name\":\"" + u.getUsenam() + "\",\"nivel\":\""+u.getAdmiweb()+"\"}");
+                } else {
+                    out.println("{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}");
+                }
+            }
+            else{
+                out.println("{\"resultado\":\"error\",\"mensaje\":\"La clave debe tener valor\"}");
+            }
+        } catch (Exception ex) {
+            System.out.println("{\"resultado\":\"error\",\"mensaje\":\"" + ex.getMessage() + "\"}");
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

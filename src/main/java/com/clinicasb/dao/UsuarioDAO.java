@@ -1,6 +1,6 @@
-package dao;
+package com.clinicasb.dao;
 
-import dto.Usuarios;
+import com.clinicasb.dto.Usuarios;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

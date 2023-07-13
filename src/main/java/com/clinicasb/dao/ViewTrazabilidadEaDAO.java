@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package com.clinicasb.dao;
 
-import dto.ViewTrazabilidadEa;
+import com.clinicasb.dto.ViewTrazabilidadEa;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

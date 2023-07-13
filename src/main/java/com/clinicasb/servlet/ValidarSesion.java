@@ -2,10 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package servlet;
+package com.clinicasb.servlet;
 
-import dao.UsuarioDAO;
-import dto.Usuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,15 +11,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import util.Cripto;
-import static util.Cripto.getSHA;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author USUARIO
  */
-@WebServlet(name = "UsuarioCRUD", urlPatterns = {"/usuariocrud"})
-public class UsuarioCRUD extends HttpServlet {
+@WebServlet(name = "ValidarSesion", urlPatterns = {"/validarsesion"})
+public class ValidarSesion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,37 +31,28 @@ public class UsuarioCRUD extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            try {
-                String accion = request.getParameter("accion");
-                String user = request.getParameter("usuario");
-                Usuarios usuario= UsuarioDAO.buscarPorLogi(user);     
-                
-                switch (accion) {
-                    case "1": //reestablecer
-                        String nuevaClave=Cripto.toHexString(getSHA(user));
-                        usuario.setPassweb(nuevaClave);                 
-                        if(UsuarioDAO.modificar(usuario)){
-                            out.print("{\"resultado\":\"ok\",\"mensaje\":\"Se reestableció la contraseña correctamente\"}");
-                        }
-                        else{
-                            out.println("{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}");
-                        }                        
-                        break;
-                    case "2"://borrar
-                        usuario.setPassweb(null);                 
-                        if(UsuarioDAO.modificar(usuario)){
-                            out.print("{\"resultado\":\"ok\",\"mensaje\":\"Se borró la contraseña correctamente\"}");
-                        }
-                        else{
-                            out.println("{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}");
-                        }                        
-                        break;
+            try{
+            HttpSession session = request.getSession(true);             
+            String logueado =session.getAttribute("logueado").toString();
+            String logi=session.getAttribute("logi").toString();
+            String nombre=session.getAttribute("nombre").toString();
+            String nivel =session.getAttribute("nivel").toString();
+            if (logueado==null) {                               
+                out.println("{\"resultado\":\"error\"}");                
+            }
+            else{               
+                if(session.getAttribute("logueado").toString().equals("1")){
+                    out.println("{\"resultado\":\"ok\",\"logi\":\""+logi+"\",\"nombre\":\""+nombre+"\",\"nivel\":\""+nivel+"\"}");                
                 }
-            } catch (Exception ex) {
-                out.print("{\"resultado\":\"error\",\"mensaje\":\"" + ex.getMessage() + "\"}");
+                else{
+                    out.println("{\"resultado\":\"error\"}");                
+                }
+            }}
+            catch(Exception ex){
+                        out.println("{\"resultado\":\"error\"}");                
             }
         }
     }

@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package servlet;
+package com.clinicasb.servlet;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dao.UsuarioDAO;
-import dto.Usuarios;
+import com.clinicasb.dao.UsuarioDAO;
+import com.clinicasb.dto.Usuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;

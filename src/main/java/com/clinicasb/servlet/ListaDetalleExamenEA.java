@@ -2,28 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package servlet;
+package com.clinicasb.servlet;
 
-import dao.UsuarioDAO;
-import dto.Usuarios;
+import com.google.gson.Gson;
+import com.clinicasb.dao.ViewTrazabilidadEaDAO;
+import com.clinicasb.dto.ViewTrazabilidadEa;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import util.Cripto;
-import static util.Cripto.getSHA;
 
 /**
  *
  * @author USUARIO
  */
-@WebServlet(name = "CambiarClave", urlPatterns = {"/cambiarclave"})
-public class CambiarClave extends HttpServlet {
+@WebServlet(name = "ListaDetalleExamenEA", urlPatterns = {"/listadetalleexamenea"})
+public class ListaDetalleExamenEA extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,29 +36,25 @@ public class CambiarClave extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            //String logi = request.getParameter("logi");
-            String claveActual = request.getParameter("claveActual");
-            String nuevaClave = request.getParameter("nuevaClave");
-            claveActual = Cripto.toHexString(getSHA(claveActual.toUpperCase()));
-            nuevaClave = Cripto.toHexString(getSHA(nuevaClave.toUpperCase()));
-
-            HttpSession session = request.getSession(true);
-            String logi = session.getAttribute("logi").toString();
-            Usuarios usuario = UsuarioDAO.buscarPorLogi(logi);
-            if (!usuario.getPassweb().equals(claveActual)) {
-                out.println("{\"resultado\":\"error\",\"mensaje\":\"La Clave actual no es la correcta\"}");
-            } else {
-                usuario.setPassweb(nuevaClave);
-                if (UsuarioDAO.modificar(usuario)) {
-                    out.println("{\"resultado\":\"ok\"}");
-                } else {
-                    out.println("{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}");
-                }
+            String fechaInicio = request.getParameter("fechaInicio");
+            String fechaFin = request.getParameter("fechaFin");
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            Date filtroInicio = null, filtroFin = null;
+            try {
+                filtroInicio = formato.parse(fechaInicio);  //formato.parse("2023-06-01");
+                filtroFin =  formato.parse(fechaFin); //formato.parse("2023-06-01");
+                List<ViewTrazabilidadEa> lista = ViewTrazabilidadEaDAO.listar(filtroInicio, filtroFin);
+                Gson g = new Gson();
+                String resultado = g.toJson(lista);
+                resultado = "{\"data\":" + resultado + "}";
+                out.println(resultado);
+            } catch (Exception ex) {
+                String resultado = "{\"data\":}";
+                out.println(resultado);
             }
-        } catch (NoSuchAlgorithmException ex) {
-            System.out.println("{\"resultado\":\"error\",\"mensaje\":\"" + ex.getMessage() + "\"}");
+
         }
     }
 

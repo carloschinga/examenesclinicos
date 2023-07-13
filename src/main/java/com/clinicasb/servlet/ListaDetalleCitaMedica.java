@@ -2,23 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package servlet;
+package com.clinicasb.servlet;
 
+import com.google.gson.Gson;
+import com.clinicasb.dao.ViewTrazabilidadCitaMedicaDAO;
+import com.clinicasb.dto.ViewTrazabilidadCitaMedica;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author USUARIO
  */
-@WebServlet(name = "ValidarSesion", urlPatterns = {"/validarsesion"})
-public class ValidarSesion extends HttpServlet {
+@WebServlet(name = "ListaDetalleCitaMedica", urlPatterns = {"/listadetallecitamedica"})
+public class ListaDetalleCitaMedica extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,26 +38,22 @@ public class ValidarSesion extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            try{
-            HttpSession session = request.getSession(true);             
-            String logueado =session.getAttribute("logueado").toString();
-            String logi=session.getAttribute("logi").toString();
-            String nombre=session.getAttribute("nombre").toString();
-            String nivel =session.getAttribute("nivel").toString();
-            if (logueado==null) {                               
-                out.println("{\"resultado\":\"error\"}");                
-            }
-            else{               
-                if(session.getAttribute("logueado").toString().equals("1")){
-                    out.println("{\"resultado\":\"ok\",\"logi\":\""+logi+"\",\"nombre\":\""+nombre+"\",\"nivel\":\""+nivel+"\"}");                
-                }
-                else{
-                    out.println("{\"resultado\":\"error\"}");                
-                }
-            }}
-            catch(Exception ex){
-                        out.println("{\"resultado\":\"error\"}");                
+
+            String fechaInicio = request.getParameter("fechaInicio");
+            String fechaFin = request.getParameter("fechaFin");
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            Date filtroInicio = null, filtroFin = null;
+            try {
+                filtroInicio = formato.parse(fechaInicio);
+                filtroFin = formato.parse(fechaFin);
+                List<ViewTrazabilidadCitaMedica> lista = ViewTrazabilidadCitaMedicaDAO.listar(filtroInicio, filtroFin);
+                Gson g = new Gson();
+                String resultado = g.toJson(lista);
+                resultado = "{\"data\":" + resultado + "}";
+                out.print(resultado);
+            } catch (Exception ex) {
+                String resultado = "{\"data\":}";
+                out.println(resultado);
             }
         }
     }

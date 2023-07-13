@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dto;
+package com.clinicasb.dto;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,36 +23,36 @@ import javax.validation.constraints.Size;
  * @author USUARIO
  */
 @Entity
-@Table(name = "view_trazabilidad_la")
+@Table(name = "view_trazabilidad_ea")
 @NamedQueries({
-    @NamedQuery(name = "ViewTrazabilidadLa.findAll", query = "SELECT v FROM ViewTrazabilidadLa v"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findBySecuencia", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.secuencia = :secuencia"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByHistoria", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.historia = :historia"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByPaciente", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.paciente = :paciente"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByTipoPlan", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.tipoPlan = :tipoPlan"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByExamen", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.examen = :examen"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByFechaOrden", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.fechaOrden = :fechaOrden"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByFechaCreacion", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.fechaCreacion = :fechaCreacion"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByFechaFiltro", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.fechaFiltro = :fechaFiltro"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByFechaFiltroBeetwen", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.fechaFiltro BETWEEN :startDate and :endDate ORDER BY v.secuencia"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByTieneCreacion", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.tieneCreacion = :tieneCreacion"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByFechaPago", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.fechaPago = :fechaPago"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByTienePago", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.tienePago = :tienePago"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByDiasDemoraPago", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.diasDemoraPago = :diasDemoraPago"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByFechaTomaExamen", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.fechaTomaExamen = :fechaTomaExamen"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByTieneTomaExamen", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.tieneTomaExamen = :tieneTomaExamen"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByDiasDemoraExamen", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.diasDemoraExamen = :diasDemoraExamen"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByFechaResultado", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.fechaResultado = :fechaResultado"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByTieneResultado", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.tieneResultado = :tieneResultado"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByDiasDemoraResultado", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.diasDemoraResultado = :diasDemoraResultado"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByFechaAprobado", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.fechaAprobado = :fechaAprobado"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByTieneAprobado", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.tieneAprobado = :tieneAprobado"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByDiasDemoraAprobado", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.diasDemoraAprobado = :diasDemoraAprobado"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByMes", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.mes = :mes"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByDia", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.dia = :dia"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findByAnio", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.anio = :anio"),
-    @NamedQuery(name = "ViewTrazabilidadLa.findBySemana", query = "SELECT v FROM ViewTrazabilidadLa v WHERE v.semana = :semana")})
-public class ViewTrazabilidadLa implements Serializable {
+    @NamedQuery(name = "ViewTrazabilidadEa.findAll", query = "SELECT v FROM ViewTrazabilidadEa v"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findBySecuencia", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.secuencia = :secuencia"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByHistoria", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.historia = :historia"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByPaciente", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.paciente = :paciente"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByTipoPlan", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.tipoPlan = :tipoPlan"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByExamen", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.examen = :examen"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaOrden", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaOrden = :fechaOrden"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaCreacion", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaFiltro", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaFiltro = :fechaFiltro"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaFiltroBeetwen", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaFiltro BETWEEN :startDate and :endDate ORDER BY v.secuencia"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByTieneCreacion", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.tieneCreacion = :tieneCreacion"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaPago", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaPago = :fechaPago"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByTienePago", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.tienePago = :tienePago"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByDiasDemoraPago", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.diasDemoraPago = :diasDemoraPago"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaTomaExamen", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaTomaExamen = :fechaTomaExamen"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByTieneTomaExamen", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.tieneTomaExamen = :tieneTomaExamen"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByDiasDemoraExamen", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.diasDemoraExamen = :diasDemoraExamen"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaResultado", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaResultado = :fechaResultado"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByTieneResultado", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.tieneResultado = :tieneResultado"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByDiasDemoraResultado", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.diasDemoraResultado = :diasDemoraResultado"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaAprobado", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaAprobado = :fechaAprobado"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByTieneAprobado", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.tieneAprobado = :tieneAprobado"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByDiasDemoraAprobado", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.diasDemoraAprobado = :diasDemoraAprobado"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByMes", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.mes = :mes"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByDia", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.dia = :dia"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findByAnio", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.anio = :anio"),
+    @NamedQuery(name = "ViewTrazabilidadEa.findBySemana", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.semana = :semana")})
+public class ViewTrazabilidadEa implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -146,7 +146,7 @@ public class ViewTrazabilidadLa implements Serializable {
     @Column(name = "semana")
     private Integer semana;
 
-    public ViewTrazabilidadLa() {
+    public ViewTrazabilidadEa() {
     }
 
     public int getSecuencia() {

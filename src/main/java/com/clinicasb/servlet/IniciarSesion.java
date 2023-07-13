@@ -2,28 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package servlet;
+package com.clinicasb.servlet;
 
-import com.google.gson.Gson;
-import dao.ViewTrazabilidadLaDAO;
-import dto.ViewTrazabilidadLa;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author USUARIO
  */
-@WebServlet(name = "ListaDetalleExamenLA", urlPatterns = {"/listadetalleexamenla"})
-public class ListaDetalleExamenLA extends HttpServlet {
+@WebServlet(name = "IniciarSesion", urlPatterns = {"/iniciarsesion"})
+public class IniciarSesion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,25 +31,18 @@ public class ListaDetalleExamenLA extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String fechaInicio = request.getParameter("fechaInicio");
-            String fechaFin = request.getParameter("fechaFin");
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-            Date filtroInicio = null, filtroFin = null;
-            try {
-                filtroInicio = formato.parse(fechaInicio);  //formato.parse("2023-06-01");
-                filtroFin =  formato.parse(fechaFin); //formato.parse("2023-06-01");
-                List<ViewTrazabilidadLa> lista = ViewTrazabilidadLaDAO.listar(filtroInicio, filtroFin);
-                Gson g = new Gson();
-                String resultado = g.toJson(lista);
-                resultado = "{\"data\":" + resultado + "}";
-                out.println(resultado);
-            } catch (Exception ex) {
-                String resultado = "{\"data\":}";
-                out.println(resultado);
-            }
+            /* TODO output your page here. You may use following sample code. */
+            String logi = request.getParameter("logi");
+            String nombre = request.getParameter("nombre");
+            String nivel = request.getParameter("nivel");
 
+            HttpSession session = request.getSession(true);
+            session.setAttribute("logueado", "1");
+            session.setAttribute("logi", logi);
+            session.setAttribute("nombre", nombre);
+            session.setAttribute("nivel", nivel);
         }
     }
 
@@ -66,7 +54,6 @@ public class ListaDetalleExamenLA extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     *
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
