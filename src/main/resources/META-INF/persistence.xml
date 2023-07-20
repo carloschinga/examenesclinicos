@@ -5,14 +5,12 @@
     <class>com.clinicasb.dto.ViewTrazabilidadCitaMedica</class>
     <class>com.clinicasb.dto.ViewTrazabilidadLa</class>
     <class>com.clinicasb.dto.ViewTrazabilidadEa</class>
+    <class>com.clinicasb.dto.ViewProgramacionMedicoServicio</class>
+    <class>com.clinicasb.dto.ViewProgramacionMedicoMedico</class>
     <class>com.clinicasb.dto.Usuario</class>
+    <class>com.clinicasb.dto.ViewProgramacionMedicoDeta</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
-      <!--<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://192.168.0.97\INTEGRACION:1433;databaseName=LOLCLI9000_DEV"/>
-      <property name="javax.persistence.jdbc.user" value="desarrollo"/>
-      <property name="javax.persistence.jdbc.password" value="De$@sb23"/>
-      <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-      <property name="eclipselink.cache.shared.default" value="false"/>-->
+    <properties>   
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://192.168.0.29\SERVILOLCLI20:1433;databaseName=LOLCLI9000"/>
       <property name="javax.persistence.jdbc.user" value="applolcli"/>
       <property name="javax.persistence.jdbc.password" value="Lolcliapp23"/>
