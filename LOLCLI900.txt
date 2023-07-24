@@ -1,0 +1,127 @@
+USE [LOLCLI9000]
+GO
+
+/****** Object:  Table [dbo].[usuarios]    Script Date: 24/07/2023 11:06:10 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[usuarios](
+	[usecod] [int] NOT NULL,
+	[siscod] [int] NOT NULL,
+	[usepas] [varchar](6) NOT NULL,
+	[usenam] [varchar](30) NOT NULL,
+	[useusr] [varchar](10) NOT NULL,
+	[usesgl] [varchar](3) NOT NULL,
+	[grucod] [varchar](6) NOT NULL,
+	[estado] [varchar](1) NOT NULL,
+	[feccre] [datetime] NOT NULL,
+	[fecumv] [datetime] NOT NULL,
+	[usecodx] [int] NOT NULL,
+	[usenamx] [varchar](30) NOT NULL,
+	[hostname] [varchar](20) NOT NULL,
+	[usefor] [varchar](20) NULL,
+	[usedoc] [varchar](15) NULL,
+	[usepassx] [varchar](100) NOT NULL,
+	[usefir] [varchar](80) NULL,
+	[usediacpass] [int] NOT NULL,
+	[fecumvpass] [datetime] NOT NULL,
+	[usereqcpass] [varchar](1) NOT NULL,
+	[passweb] [nchar](70) NULL,
+	[admiweb] [int] NULL,
+ CONSTRAINT [pk_usuarios] PRIMARY KEY CLUSTERED 
+(
+	[usecod] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[usuarios] ADD  DEFAULT (getdate()) FOR [feccre]
+GO
+
+ALTER TABLE [dbo].[usuarios] ADD  DEFAULT ('*') FOR [usepassx]
+GO
+
+ALTER TABLE [dbo].[usuarios] ADD  DEFAULT ((0)) FOR [usediacpass]
+GO
+
+ALTER TABLE [dbo].[usuarios] ADD  DEFAULT (getdate()) FOR [fecumvpass]
+GO
+
+ALTER TABLE [dbo].[usuarios] ADD  DEFAULT ('N') FOR [usereqcpass]
+GO
+
+ALTER TABLE [dbo].[usuarios]  WITH CHECK ADD  CONSTRAINT [fk_usuarios_grupos] FOREIGN KEY([grucod])
+REFERENCES [dbo].[grupos] ([grucod])
+GO
+
+ALTER TABLE [dbo].[usuarios] CHECK CONSTRAINT [fk_usuarios_grupos]
+GO
+
+ALTER TABLE [dbo].[usuarios]  WITH CHECK ADD  CONSTRAINT [fk_usuarios_siscod] FOREIGN KEY([siscod])
+REFERENCES [dbo].[sistema] ([siscod])
+GO
+
+ALTER TABLE [dbo].[usuarios] CHECK CONSTRAINT [fk_usuarios_siscod]
+GO
+
+ALTER TABLE [dbo].[usuarios]  WITH CHECK ADD  CONSTRAINT [chk_usuario_estado] CHECK  (([estado] = 'S' or [estado] = 'N'))
+GO
+
+ALTER TABLE [dbo].[usuarios] CHECK CONSTRAINT [chk_usuario_estado]
+GO
+
+
+
+
+INSERT INTO [dbo].[usuarios]
+           ([usecod]
+           ,[siscod]
+           ,[usepas]
+           ,[usenam]
+           ,[useusr]
+           ,[usesgl]
+           ,[grucod]
+           ,[estado]
+           ,[feccre]
+           ,[fecumv]
+           ,[usecodx]
+           ,[usenamx]
+           ,[hostname]
+           ,[usefor]
+           ,[usedoc]
+           ,[usepassx]
+           ,[usefir]
+           ,[usediacpass]
+           ,[fecumvpass]
+           ,[usereqcpass]
+           ,[passweb]
+           ,[admiweb])
+     VALUES
+           (9
+           ,1
+           ,'9*****'
+           ,'CESAR FERNANDEZ'
+           ,'CESAR'
+           ,'CES'
+           ,'SUPERV'
+           ,'S'
+           ,'2020-10-01 19:51:29.303'
+           ,'2022-03-18 20:28:42.190'
+           ,15
+           ,'ELIZABETH'
+           ,'BACKUP-SISTEMAS'
+           ,null
+           ,'15589767'
+           ,'q5v2`3g9i5d<'
+           ,null
+           ,0
+           ,'2022-11-10 11:17:34.143'
+           ,'N'
+           ,'9719afb6914cede56aa9e49c32f6e7aa053303b32b37e307bdfa337b54594a82'
+           ,1)
+GO
+
+
