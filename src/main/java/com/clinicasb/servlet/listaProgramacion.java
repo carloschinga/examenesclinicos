@@ -67,7 +67,9 @@ public class listaProgramacion extends HttpServlet {
                     case "detalle":
                         String medcod = request.getParameter("medcod");
                         sercod = request.getParameter("sercod");
-                        List<ViewProgramacionMedicoDeta> listaDetalle = ViewProgramacionMedicoDetalleDAO.listar(medcod,sercod);
+                        String periodo= request.getParameter("periodo");
+                        periodo=periodo.replace("-","");
+                        List<ViewProgramacionMedicoDeta> listaDetalle = ViewProgramacionMedicoDetalleDAO.listar(medcod,sercod, periodo);
                         out.print("{\"data\":" + g.toJson(listaDetalle) + "}");
                         break;
                     case "consultorio":

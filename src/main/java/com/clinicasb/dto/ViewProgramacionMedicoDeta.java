@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 @Table(name = "view_programacion_medico_deta")
 @NamedQueries({
     @NamedQuery(name = "ViewProgramacionMedicoDeta.findAll", query = "SELECT v FROM ViewProgramacionMedicoDeta v"),
-    @NamedQuery(name = "ViewProgramacionMedicoDeta.findByMedcodSercod", query = "SELECT v FROM ViewProgramacionMedicoDeta v WHERE v.sercod = :sercod and v.medcod = :medcod"),
+    @NamedQuery(name = "ViewProgramacionMedicoDeta.findByMedcodSercod", query = "SELECT v FROM ViewProgramacionMedicoDeta v WHERE v.sercod = :sercod and v.medcod = :medcod and v.promes = :promes"),
     @NamedQuery(name = "ViewProgramacionMedicoDeta.findBySercod", query = "SELECT v FROM ViewProgramacionMedicoDeta v WHERE v.sercod = :sercod"),
     @NamedQuery(name = "ViewProgramacionMedicoDeta.findByMedcod", query = "SELECT v FROM ViewProgramacionMedicoDeta v WHERE v.medcod = :medcod"),
     @NamedQuery(name = "ViewProgramacionMedicoDeta.findByMednam", query = "SELECT v FROM ViewProgramacionMedicoDeta v WHERE v.mednam = :mednam"),

@@ -27,12 +27,14 @@ public class ViewProgramacionMedicoDetalleDAO {
         }
     }  
 
-    public static List<ViewProgramacionMedicoDeta> listar(String medcod, String sercod ) {
+    public static List<ViewProgramacionMedicoDeta> listar(String medcod, String sercod, String periodo ) {
         try {
             EntityManager em = getEntity().createEntityManager();
             Query q = em.createNamedQuery("ViewProgramacionMedicoDeta.findByMedcodSercod");            
             q.setParameter("medcod", medcod);
             q.setParameter("sercod", sercod);
+            q.setParameter("promes", periodo);
+            
             List<ViewProgramacionMedicoDeta> lista = q.getResultList();
             return lista;
         } catch (Exception ex) {

@@ -60,7 +60,9 @@
                                         <br/>
                                         Médico:
                                         <select id="cmbMedico" class="form-control form-control-user"></select>
-
+                                        <br/>
+                                        Mes:
+                                        <input id="txtMes" type="month" class="form-control form-control-user" style="text-transform:uppercase">                                        
                                     </div>    
                                     <div class="col-9" id="detalle">                                        
                                     </div></div>
@@ -136,10 +138,14 @@
         <script src="js/moment.min.js" ></script>
         <script>
             $(document).ready(function () {
+
                 $.getJSON("validarsesion", function (data) {
                     if (data.resultado === "ok") {
                         $('#topbar').load('topbar.html');
                         $('#sidebar').load('sidebar.html');
+
+                        const today = moment();
+                        $('#txtMes').val(today.format('YYYY-MM'));
 
                         let parametro = {tabla: "servicio"};
                         $.getJSON("listaprogramacion", parametro, function (data) {
@@ -151,7 +157,7 @@
                                 $.each(data.data, function (id, med) {
                                     $('#cmbMedico').append('<option value=' + med.medcod + '>' + med.mednam + '</option>');
                                 });
-                                parametro = {tabla: "detalle", medcod: $('#cmbMedico').val(), sercod: $('#cmbServicio').val()};
+                                parametro = {tabla: "detalle", medcod: $('#cmbMedico').val(), sercod: $('#cmbServicio').val(), periodo: $('#txtMes').val()};
                                 $.getJSON("listaprogramacion", parametro, function (data) {
                                     $.each(data.data, function (id, deta) {
                                         switch (deta.pronum) {
@@ -190,7 +196,7 @@
                             $('#cmbMedico').append('<option value=' + med.medcod + '>' + med.mednam + '</option>');
                         });
                         $('#detalle').empty();
-                        parametro = {tabla: "detalle", medcod: $('#cmbMedico').val(), sercod: $('#cmbServicio').val()};
+                        parametro = {tabla: "detalle", medcod: $('#cmbMedico').val(), sercod: $('#cmbServicio').val(), periodo: $('#txtMes').val()};
                         $.getJSON("listaprogramacion", parametro, function (data) {
                             $.each(data.data, function (id, deta) {
                                 switch (deta.pronum) {
@@ -216,7 +222,7 @@
                 });
                 $('#cmbMedico').on('change', function () {
                     $('#detalle').empty();
-                    parametro = {tabla: "detalle", medcod: $('#cmbMedico').val(), sercod: $('#cmbServicio').val()};
+                    parametro = {tabla: "detalle", medcod: $('#cmbMedico').val(), sercod: $('#cmbServicio').val(), periodo: $('#txtMes').val()};
                     $.getJSON("listaprogramacion", parametro, function (data) {
                         $.each(data.data, function (id, deta) {
                             switch (deta.pronum) {
@@ -242,10 +248,12 @@
                         });
                     });
                 });
-                $("#btnBuscar").click(function () {
-                    table.ajax.reload( );
-
+                $('#txtMes').on('change', function () {
+                    $('#cmbMedico').change();
+                    //console.log($('#txtMes').val());
+                    
                 });
+
                 $("#salir").click(function () {
                     $.getJSON("cerrarsesion", function (data) {});
                     $(location).attr('href', "index.html");
