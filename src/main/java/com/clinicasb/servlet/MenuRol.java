@@ -4,21 +4,25 @@
  */
 package com.clinicasb.servlet;
 
+import com.clinicasb.dao.ViewWebMenuDetaJpaController;
+import com.clinicasb.dao.ViewWebMenuDetaRolJpaController;
+import com.clinicasb.dto.ViewWebMenuDeta;
+import com.clinicasb.dto.ViewWebMenuDetaRol;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author USUARIO
  */
-@WebServlet(name = "IniciarSesion", urlPatterns = {"/iniciarsesion"})
-public class IniciarSesion extends HttpServlet {
+@WebServlet(name = "MenuRol", urlPatterns = {"/menurol"})
+public class MenuRol extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,17 +38,28 @@ public class IniciarSesion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String logi = request.getParameter("logi");
-            String nombre = request.getParameter("nombre");
-            String nivel = request.getParameter("nivel");
-            String codi = request.getParameter("codi");
+            String codrol = request.getParameter("codrol");
+            ViewWebMenuDetaRolJpaController menuDetaRolDAO = new ViewWebMenuDetaRolJpaController();
+            List<ViewWebMenuDetaRol> lista = menuDetaRolDAO.listarXCodRol(Integer.parseInt(codrol));
 
-            HttpSession session = request.getSession(true);
-            session.setAttribute("logueado", "1");
-            session.setAttribute("codi", codi);
-            session.setAttribute("logi", logi);
-            session.setAttribute("nombre", nombre);
-            session.setAttribute("nivel", nivel);
+            String resultado = "";
+            for (ViewWebMenuDetaRol viewWebMenuDetaRol : lista) {
+                if (viewWebMenuDetaRol.getCodmas() == 0) {
+                    if (viewWebMenuDetaRol.getAsigperm()==1) {
+                        resultado += "{ \"id\" : \"" + viewWebMenuDetaRol.getCodmen() + "\", \"parent\" : \"#\", \"text\" : \"" + viewWebMenuDetaRol.getNommen() + "\" ,\"state\":{\"selected\":true}},";
+                    } else {
+                        resultado += "{ \"id\" : \"" + viewWebMenuDetaRol.getCodmen() + "\", \"parent\" : \"#\", \"text\" : \"" + viewWebMenuDetaRol.getNommen() + "\"},";
+                    }
+                } else {
+                    if (viewWebMenuDetaRol.getAsigperm()==1) {
+                        resultado += "{ \"id\" : \"" + viewWebMenuDetaRol.getCodmen() + "\", \"parent\" : \"" + viewWebMenuDetaRol.getCodmas() + "\", \"text\" : \"" + viewWebMenuDetaRol.getNommen() + "\" ,\"state\":{\"selected\":true}},";
+                    } else {
+                        resultado += "{ \"id\" : \"" + viewWebMenuDetaRol.getCodmen() + "\", \"parent\" : \"" + viewWebMenuDetaRol.getCodmas() + "\", \"text\" : \"" + viewWebMenuDetaRol.getNommen() + "\"},";
+                    }
+                }
+
+            }
+            out.print(resultado);
         }
     }
 

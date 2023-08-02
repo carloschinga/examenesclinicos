@@ -4,8 +4,13 @@
  */
 package com.clinicasb.servlet;
 
+import com.clinicasb.dao.ViewWebMenuDetaJpaController;
+import com.clinicasb.dao.WebMenuJpaController;
+import com.clinicasb.dto.ViewWebMenuDeta;
+import com.clinicasb.dto.WebMenu;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author USUARIO
  */
-@WebServlet(name = "IniciarSesion", urlPatterns = {"/iniciarsesion"})
-public class IniciarSesion extends HttpServlet {
+@WebServlet(name = "Menu", urlPatterns = {"/menu"})
+public class Menu extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,17 +39,30 @@ public class IniciarSesion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String logi = request.getParameter("logi");
-            String nombre = request.getParameter("nombre");
-            String nivel = request.getParameter("nivel");
-            String codi = request.getParameter("codi");
-
+            String resultado="";
             HttpSession session = request.getSession(true);
-            session.setAttribute("logueado", "1");
-            session.setAttribute("codi", codi);
-            session.setAttribute("logi", logi);
-            session.setAttribute("nombre", nombre);
-            session.setAttribute("nivel", nivel);
+            String codi=session.getAttribute("codi").toString();
+            
+            
+            ViewWebMenuDetaJpaController webMenuDetaDAO= new ViewWebMenuDetaJpaController();
+            List<ViewWebMenuDeta> lista= webMenuDetaDAO.listarMenuXUsua(Integer.parseInt(codi));
+            for (ViewWebMenuDeta webMenuDeta : lista) {
+                if(webMenuDeta.getTipmen().equals("T")){ //TITULO
+                    resultado+="<div class=\"sidebar-heading\">"+webMenuDeta.getNommen()+"</div>";
+                } 
+                 
+                    
+                if(webMenuDeta.getTipmen().equals("M")){ //MENU
+                    resultado+="<li class=\"nav-item\"><a class=\"nav-link\" href=\""+webMenuDeta.getHtml()+"\"><i class=\""+webMenuDeta.getIclass()+"\"></i><span>"+webMenuDeta.getNommen()+"</span></a></li>";
+                }
+                
+                if(webMenuDeta.getTipmen().equals("-")){ //Separador
+                    resultado+="<hr class=\"sidebar-divider\">";
+                }
+                                
+            }
+            out.print(resultado);
+            
         }
     }
 

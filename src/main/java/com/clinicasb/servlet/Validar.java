@@ -36,22 +36,26 @@ public class Validar extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            String resultado="";
             String user = request.getParameter("logi");
             String pass = request.getParameter("pass");
-            pass = Cripto.toHexString(getSHA(pass.toUpperCase()));
+            try{
+                pass = Cripto.toHexString(getSHA(pass.toUpperCase()));
+            }catch(Exception ex){
+                resultado="{\"resultado\":\"error\",\"mensaje\":\"Problemas con la clave\"}";
+            }
             if (!pass.trim().equals("")) {
                 Usuarios u = UsuarioDAO.logueo(user, pass);
                 if (u != null) {
-                    out.println("{\"resultado\":\"ok\",\"user\":\"" + u.getUseusr()+ "\",\"name\":\"" + u.getUsenam() + "\",\"nivel\":\""+u.getAdmiweb()+"\"}");
+                    resultado="{\"resultado\":\"ok\",\"codi\":\""+u.getUsecod()+"\",\"user\":\"" + u.getUseusr()+ "\",\"name\":\"" + u.getUsenam() + "\",\"nivel\":\""+u.getAdmiweb()+"\"}";
                 } else {
-                    out.println("{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}");
+                    resultado="{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}";
                 }
             }
             else{
-                out.println("{\"resultado\":\"error\",\"mensaje\":\"La clave debe tener valor\"}");
+                resultado="{\"resultado\":\"error\",\"mensaje\":\"La clave debe tener valor\"}";
             }
-        } catch (Exception ex) {
-            System.out.println("{\"resultado\":\"error\",\"mensaje\":\"" + ex.getMessage() + "\"}");
+            out.print(resultado);
         }
 
     }

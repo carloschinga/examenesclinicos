@@ -15,7 +15,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -24,8 +23,7 @@ import javax.validation.constraints.Size;
  * @author USUARIO
  */
 @Entity
-@Table(name = "usuarios", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"usepas", "usenam"})})
+@Table(name = "usuarios")
 @NamedQueries({
     @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
     @NamedQuery(name = "Usuarios.findByUsecod", query = "SELECT u FROM Usuarios u WHERE u.usecod = :usecod"),
@@ -48,97 +46,100 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Usuarios.findByFecumvpass", query = "SELECT u FROM Usuarios u WHERE u.fecumvpass = :fecumvpass"),
     @NamedQuery(name = "Usuarios.findByUsereqcpass", query = "SELECT u FROM Usuarios u WHERE u.usereqcpass = :usereqcpass"),
     @NamedQuery(name = "Usuarios.findByPassweb", query = "SELECT u FROM Usuarios u WHERE u.passweb = :passweb"),
-    @NamedQuery(name = "Usuarios.findByAdmiweb", query = "SELECT u FROM Usuarios u WHERE u.admiweb = :admiweb")})
+    @NamedQuery(name = "Usuarios.findByAdmiweb", query = "SELECT u FROM Usuarios u WHERE u.admiweb = :admiweb"),
+    @NamedQuery(name = "Usuarios.findByRolweb", query = "SELECT u FROM Usuarios u WHERE u.rolweb = :rolweb")})
 public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "usecod", nullable = false)
+    @Column(name = "usecod")
     private Integer usecod;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 6)
-    @Column(name = "usepas", nullable = false, length = 6)
+    @Column(name = "usepas")
     private String usepas;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "usenam", nullable = false, length = 30)
+    @Column(name = "usenam")
     private String usenam;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
-    @Column(name = "useusr", nullable = false, length = 10)
+    @Column(name = "useusr")
     private String useusr;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)
-    @Column(name = "usesgl", nullable = false, length = 3)
+    @Column(name = "usesgl")
     private String usesgl;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
-    @Column(name = "estado", nullable = false, length = 1)
+    @Column(name = "estado")
     private String estado;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "feccre", nullable = false)
+    @Column(name = "feccre")
     @Temporal(TemporalType.TIMESTAMP)
     private Date feccre;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fecumv", nullable = false)
+    @Column(name = "fecumv")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecumv;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "usecodx", nullable = false)
+    @Column(name = "usecodx")
     private int usecodx;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "usenamx", nullable = false, length = 30)
+    @Column(name = "usenamx")
     private String usenamx;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "hostname", nullable = false, length = 20)
+    @Column(name = "hostname")
     private String hostname;
     @Size(max = 20)
-    @Column(name = "usefor", length = 20)
+    @Column(name = "usefor")
     private String usefor;
     @Size(max = 15)
-    @Column(name = "usedoc", length = 15)
+    @Column(name = "usedoc")
     private String usedoc;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "usepassx", nullable = false, length = 100)
+    @Column(name = "usepassx")
     private String usepassx;
     @Size(max = 80)
-    @Column(name = "usefir", length = 80)
+    @Column(name = "usefir")
     private String usefir;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "usediacpass", nullable = false)
+    @Column(name = "usediacpass")
     private int usediacpass;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fecumvpass", nullable = false)
+    @Column(name = "fecumvpass")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecumvpass;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
-    @Column(name = "usereqcpass", nullable = false, length = 1)
+    @Column(name = "usereqcpass")
     private String usereqcpass;
     @Size(max = 70)
-    @Column(name = "passweb", length = 70)
+    @Column(name = "passweb")
     private String passweb;
     @Column(name = "admiweb")
     private Integer admiweb;
+    @Column(name = "rolweb")
+    private Integer rolweb;
 
     public Usuarios() {
     }
@@ -325,6 +326,14 @@ public class Usuarios implements Serializable {
         this.admiweb = admiweb;
     }
 
+    public Integer getRolweb() {
+        return rolweb;
+    }
+
+    public void setRolweb(Integer rolweb) {
+        this.rolweb = rolweb;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -347,7 +356,7 @@ public class Usuarios implements Serializable {
 
     @Override
     public String toString() {
-        return "dto.Usuarios[ usecod=" + usecod + " ]";
+        return "com.clinicasb.dto.Usuarios[ usecod=" + usecod + " ]";
     }
     
 }

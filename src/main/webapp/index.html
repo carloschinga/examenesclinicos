@@ -98,8 +98,9 @@
                     let pass = $("#txtClave").val();                    
                     let parametro = {logi: logi, pass: pass};
                     $.getJSON("validar", parametro, function (data) {
-                        if (data.resultado === "ok") {                                                       
-                            parametro = {logi: data.user,nombre: data.name,nivel:data.nivel};
+                        if (data.resultado === "ok") {                   
+                            console.log(data);
+                            parametro = {logi: data.user,nombre: data.name,nivel:data.nivel, codi:data.codi};
                             $.getJSON("iniciarsesion", parametro, function (data) {
                                 
                             }); 

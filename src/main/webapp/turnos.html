@@ -155,6 +155,7 @@
                             parametro = {tabla: "medico", sercod: $('#cmbServicio').val()};
                             $.getJSON("listaprogramacion", parametro, function (data) {
                                 $.each(data.data, function (id, med) {
+                                    $('#cmbMedico').append('<option value=0>SELECCIONAR</option>');
                                     $('#cmbMedico').append('<option value=' + med.medcod + '>' + med.mednam + '</option>');
                                 });
                                 parametro = {tabla: "detalle", medcod: $('#cmbMedico').val(), sercod: $('#cmbServicio').val(), periodo: $('#txtMes').val()};
@@ -193,6 +194,7 @@
                     parametro = {tabla: "medico", sercod: $('#cmbServicio').val()};
                     $.getJSON("listaprogramacion", parametro, function (data) {
                         $.each(data.data, function (id, med) {
+                            $('#cmbMedico').append('<option value=0>SELECCIONAR</option>');
                             $('#cmbMedico').append('<option value=' + med.medcod + '>' + med.mednam + '</option>');
                         });
                         $('#detalle').empty();

@@ -109,14 +109,11 @@
 
         <script>
             $(document).ready(function () {                
-                $.getJSON("validarsesion", function (data) {
-                    console.log("valido sesion");
-                    console.log(data);
+                $.getJSON("validarsesion", function (data) {                    
                     if (data.resultado === "ok") {
                         $('#topbar').load('topbar.html');
                         $('#sidebar').load('sidebar.html');
-                    } else {
-                        console.log("redireccionar");
+                    } else {                        
                         $(location).attr('href', "index.html");
                     }
                 });
