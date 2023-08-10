@@ -4,24 +4,24 @@
  */
 package com.clinicasb.servlet;
 
-import com.clinicasb.dao.UsuarioDAO;
-import com.clinicasb.dto.Usuarios;
+import com.clinicasb.dao.ViewWebPaquetesDetalleJpaController;
+import com.clinicasb.dto.ViewWebPaquetesDetalle;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.clinicasb.util.Cripto;
-import static com.clinicasb.util.Cripto.getSHA;
 
 /**
  *
  * @author USUARIO
  */
-@WebServlet(name = "UsuarioCRUD", urlPatterns = {"/usuariocrud"})
-public class UsuarioCRUD extends HttpServlet {
+@WebServlet(name = "ListaDetallePaqueteDetalle", urlPatterns = {"/listadetallepaquetedetalle"})
+public class ListaDetallePaqueteDetalle extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,38 +34,20 @@ public class UsuarioCRUD extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+        response.setContentType("text/html;charset=UTF-8");
+          try (PrintWriter out = response.getWriter()) {
+
+            String invnum = request.getParameter("invnum");
             try {
-                String accion = request.getParameter("accion");
-                String user = request.getParameter("usuario");
-                Usuarios usuario= UsuarioDAO.buscarPorLogi(user);     
-                
-                switch (accion) {
-                    case "1": //reestablecer
-                        String nuevaClave=Cripto.toHexString(getSHA(user));
-                        usuario.setPassweb(nuevaClave);                 
-                        usuario.setRolweb(1);
-                        if(UsuarioDAO.modificar(usuario)){
-                            out.print("{\"resultado\":\"ok\",\"mensaje\":\"Se reestableció la contraseña correctamente\"}");
-                        }
-                        else{
-                            out.println("{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}");
-                        }                        
-                        break;
-                    case "2"://borrar
-                        usuario.setPassweb(null);                 
-                        if(UsuarioDAO.modificar(usuario)){
-                            out.print("{\"resultado\":\"ok\",\"mensaje\":\"Se borró la contraseña correctamente\"}");
-                        }
-                        else{
-                            out.println("{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}");
-                        }                        
-                        break;
-                }
+                ViewWebPaquetesDetalleJpaController vwpdDAO= new ViewWebPaquetesDetalleJpaController();
+                List<ViewWebPaquetesDetalle> lista = vwpdDAO.listar(Integer.parseInt(invnum) );
+                Gson g = new Gson();
+                String resultado = g.toJson(lista);
+                resultado = "{\"data\":" + resultado + "}";
+                out.print(resultado);
             } catch (Exception ex) {
-                out.print("{\"resultado\":\"error\",\"mensaje\":\"" + ex.getMessage() + "\"}");
+                String resultado = "{\"data\":}";
+                out.println(resultado);
             }
         }
     }

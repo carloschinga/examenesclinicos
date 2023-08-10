@@ -16,6 +16,8 @@
     <class>com.clinicasb.dto.WebMenuRol</class>
     <class>com.clinicasb.dto.ViewWebMenuDeta</class>
     <class>com.clinicasb.dto.ViewWebMenuDetaRol</class>
+    <class>com.clinicasb.dto.ViewWebPaquetesDetalle</class>
+    <class>com.clinicasb.dto.ViewWebPaquetesCabecera</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://192.168.0.29\SERVILOLCLI20:1433;databaseName=LOLCLI9000"/>

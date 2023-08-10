@@ -5,9 +5,7 @@
 package com.clinicasb.servlet;
 
 import com.clinicasb.dao.ViewWebMenuDetaJpaController;
-import com.clinicasb.dao.WebMenuJpaController;
 import com.clinicasb.dto.ViewWebMenuDeta;
-import com.clinicasb.dto.WebMenu;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -47,7 +45,21 @@ public class Menu extends HttpServlet {
             ViewWebMenuDetaJpaController webMenuDetaDAO= new ViewWebMenuDetaJpaController();
             List<ViewWebMenuDeta> lista= webMenuDetaDAO.listarMenuXUsua(Integer.parseInt(codi));
             for (ViewWebMenuDeta webMenuDeta : lista) {
-                if(webMenuDeta.getTipmen().equals("T")){ //TITULO
+                if(webMenuDeta.getTipmen().equals("T")){ 
+                    resultado+="<li class=\"nav-item dropdown no-arrow\">";
+                    resultado+="<a class=\"nav-link dropdown-toggle text-gray-900\" href=\"#\" id=\"userDropdown\"  data-toggle=\"dropdown\" >"+webMenuDeta.getNommen()+"</a>";
+                    resultado+="<div class=\"dropdown-menu dropdown-menu-left shadow animated--grow-in\" aria-labelledby=\"userDropdown\">";
+                }
+                if(webMenuDeta.getTipmen().equals("M")){ //MENU
+                    resultado+="<a id=\"asignarpermiso\" class=\"dropdown-item\" href=\""+webMenuDeta.getHtml()+"\">"+webMenuDeta.getNommen()+"</a>";
+                }
+                if(webMenuDeta.getTipmen().equals("-")){ //MENU
+                    resultado+="</div></li>";
+                }
+                
+                
+                
+                /*if(webMenuDeta.getTipmen().equals("T")){ //TITULO
                     resultado+="<div class=\"sidebar-heading\">"+webMenuDeta.getNommen()+"</div>";
                 } 
                  
@@ -58,7 +70,7 @@ public class Menu extends HttpServlet {
                 
                 if(webMenuDeta.getTipmen().equals("-")){ //Separador
                     resultado+="<hr class=\"sidebar-divider\">";
-                }
+                }*/
                                 
             }
             out.print(resultado);

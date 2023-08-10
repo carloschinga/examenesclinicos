@@ -33,7 +33,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <div id="sidebar"></div>
+            <!-- <div id="sidebar"></div> -->
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -48,7 +48,7 @@
 
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-
+                        <br/>
                         <div class="row">
                             <div class="col-7">
                                 <div class="card">                            
@@ -154,7 +154,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <br/>
                     </div>
                     <!-- /.container-fluid -->
 
@@ -162,13 +162,7 @@
                 <!-- End of Main Content -->
 
                 <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Examenes Clínicos 2023</span>
-                        </div>
-                    </div>
-                </footer>
+                <div id="footer"></div>
                 <!-- End of Footer -->
 
             </div>
@@ -256,6 +250,7 @@
                     if (data.resultado === "ok") {
                         $('#topbar').load('topbar.html');
                         $('#sidebar').load('sidebar.html');
+                        $('#footer').load('footer.html');
 
                         let parametro = {accion: "listausuario"};
                         $.getJSON("asignarpermiso", parametro, function (data) {

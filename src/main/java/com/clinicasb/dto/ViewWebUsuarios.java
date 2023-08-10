@@ -36,7 +36,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "ViewWebUsuarios.findByRolweb", query = "SELECT v FROM ViewWebUsuarios v WHERE v.rolweb = :rolweb"),
     @NamedQuery(name = "ViewWebUsuarios.findByCodrol", query = "SELECT v FROM ViewWebUsuarios v WHERE v.codrol = :codrol"),
     @NamedQuery(name = "ViewWebUsuarios.findByNomrol", query = "SELECT v FROM ViewWebUsuarios v WHERE v.nomrol = :nomrol")})
-public class ViewWebUsuarios implements Serializable {
+public class ViewWebUsuarios implements Serializable, Comparable<ViewWebUsuarios>{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -198,6 +198,18 @@ public class ViewWebUsuarios implements Serializable {
 
     public void setNomrol(String nomrol) {
         this.nomrol = nomrol;
+    }
+    
+    public int compareTo(ViewWebUsuarios s) {
+        int compare = s.usenam.compareTo(usenam);
+
+        if (compare < 0) {
+            return 1;
+        } else if (compare > 0) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
     
 }

@@ -10028,7 +10028,8 @@ a:focus {
 }
 
 .text-gray-900 {
-  color: #3a3b45 !important;
+    color: Z !important;
+  /*color: #3a3b45 !important;*/
 }
 
 .icon-circle {

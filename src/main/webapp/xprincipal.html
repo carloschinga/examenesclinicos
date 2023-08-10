@@ -20,7 +20,7 @@
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-         <!-- Custom styles for this page -->
+        <!-- Custom styles for this page -->
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     </head>
 
@@ -30,7 +30,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <!--<div id="sidebar"></div>-->
+            <div id="sidebar"></div>
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -45,10 +45,6 @@
 
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-                       
-                       <div class="embed-responsive embed-responsive-16by9">
-                        <iframe title="Report Section" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiNWI2NzIyYmYtYjMwZC00YTk3LWJhMmYtN2FiZjFjNWUxY2UwIiwidCI6ImIyMjkwZjE4LTAzODgtNGUwMy1hNmE5LTcxM2IzNTI1ZmM1MyJ9" frameborder="0" allowFullScreen="true"></iframe>
-                       </div>
 
                     </div>
                     <!-- /.container-fluid -->
@@ -88,10 +84,10 @@
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Seleccione "Cerrar sesión"  si está listo para finalizar su sesión actual.</div>
+                    <div class="modal-body">Seleccione "Salir"  si está listo para finalizar su sesión actual.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                        <a class="btn btn-primary" href="index.html">Salir</a>
+                        <a class="btn btn-primary" id="salir">Salir</a>
                     </div>
                 </div>
             </div>
@@ -107,21 +103,17 @@
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
 
-           <!-- Page level plugins -->
+        <!-- Page level plugins -->
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
         <script>
-           $(document).ready(function () {                
-                $.getJSON("validarsesion", function (data) {
-                    console.log("valido sesion");
-                    console.log(data);
+            $(document).ready(function () {                
+                $.getJSON("validarsesion", function (data) {                    
                     if (data.resultado === "ok") {
                         $('#topbar').load('topbar.html');
                         $('#sidebar').load('sidebar.html');
-                        $('#footer').load('footer.html');
-                    } else {
-                        console.log("redireccionar");
+                    } else {                        
                         $(location).attr('href', "index.html");
                     }
                 });

@@ -4,24 +4,26 @@
  */
 package com.clinicasb.servlet;
 
-import com.clinicasb.dao.UsuarioDAO;
-import com.clinicasb.dto.Usuarios;
+import com.clinicasb.dao.ViewWebPaquetesCabeceraJpaController;
+import com.clinicasb.dto.ViewWebPaquetesCabecera;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.clinicasb.util.Cripto;
-import static com.clinicasb.util.Cripto.getSHA;
 
 /**
  *
  * @author USUARIO
  */
-@WebServlet(name = "UsuarioCRUD", urlPatterns = {"/usuariocrud"})
-public class UsuarioCRUD extends HttpServlet {
+@WebServlet(name = "ListaDetallePaquete", urlPatterns = {"/listadetallepaquete"})
+public class ListaDetallePaquete extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,38 +36,25 @@ public class UsuarioCRUD extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+
+            String fechaInicio = request.getParameter("fechaInicio");
+            String fechaFin = request.getParameter("fechaFin");
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            Date filtroInicio = null, filtroFin = null;
             try {
-                String accion = request.getParameter("accion");
-                String user = request.getParameter("usuario");
-                Usuarios usuario= UsuarioDAO.buscarPorLogi(user);     
-                
-                switch (accion) {
-                    case "1": //reestablecer
-                        String nuevaClave=Cripto.toHexString(getSHA(user));
-                        usuario.setPassweb(nuevaClave);                 
-                        usuario.setRolweb(1);
-                        if(UsuarioDAO.modificar(usuario)){
-                            out.print("{\"resultado\":\"ok\",\"mensaje\":\"Se reestableció la contraseña correctamente\"}");
-                        }
-                        else{
-                            out.println("{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}");
-                        }                        
-                        break;
-                    case "2"://borrar
-                        usuario.setPassweb(null);                 
-                        if(UsuarioDAO.modificar(usuario)){
-                            out.print("{\"resultado\":\"ok\",\"mensaje\":\"Se borró la contraseña correctamente\"}");
-                        }
-                        else{
-                            out.println("{\"resultado\":\"error\",\"mensaje\":\"" + UsuarioDAO.getMensaje() + "\"}");
-                        }                        
-                        break;
-                }
+                filtroInicio = formato.parse(fechaInicio);
+                filtroFin = formato.parse(fechaFin);
+                ViewWebPaquetesCabeceraJpaController vwpcDAO= new ViewWebPaquetesCabeceraJpaController();
+                List<ViewWebPaquetesCabecera> lista = vwpcDAO.listar(filtroInicio, filtroFin);
+                Gson g = new Gson();
+                String resultado = g.toJson(lista);
+                resultado = "{\"data\":" + resultado + "}";
+                out.print(resultado);
             } catch (Exception ex) {
-                out.print("{\"resultado\":\"error\",\"mensaje\":\"" + ex.getMessage() + "\"}");
+                String resultado = "{\"data\":}";
+                out.println(resultado);
             }
         }
     }

@@ -34,7 +34,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <div id="sidebar"></div>
+            <!-- <div id="sidebar"></div>-->
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -49,6 +49,7 @@
 
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
+                        <br/>
                         <div class="card">                            
                             <div class="card-body">
                                 <center> <h5 class="card-title">PROGRAMACIÓN DE MÉDICOS POR CONSULTORIO</h5></center>
@@ -90,17 +91,12 @@
                             </div>
                             <!-- /.container-fluid -->
                         </div>
+                        <br/>
                     </div>
                     <!-- End of Main Content -->
 
                     <!-- Footer -->
-                    <footer class="sticky-footer bg-white">
-                        <div class="container my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright &copy; Examenes Clínicos 2023</span>
-                            </div>
-                        </div>
-                    </footer>
+                    <div id="footer"></div>
                     <!-- End of Footer -->
 
                 </div>
@@ -164,6 +160,7 @@
                     if (data.resultado === "ok") {
                         $('#topbar').load('topbar.html');
                         $('#sidebar').load('sidebar.html');
+                        $('#footer').load('footer.html');
 
                     } else {
                         console.log("redireccionar");

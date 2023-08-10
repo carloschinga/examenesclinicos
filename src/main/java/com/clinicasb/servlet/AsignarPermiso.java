@@ -11,16 +11,15 @@ import com.clinicasb.dao.WebMenuRolJpaController;
 import com.clinicasb.dto.Node;
 import com.clinicasb.dto.Usuarios;
 import com.clinicasb.dto.ViewWebUsuarios;
-import com.clinicasb.dto.WebMenu;
 import com.clinicasb.dto.WebMenuPermiso;
 import com.clinicasb.dto.WebMenuPermisoPK;
 import com.clinicasb.dto.WebMenuRol;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,6 +54,7 @@ public class AsignarPermiso extends HttpServlet {
                 case "listausuario":
                     ViewWebUsuariosJpaController usuDAO = new ViewWebUsuariosJpaController();
                     List<ViewWebUsuarios> lista = usuDAO.findViewWebUsuariosEntities();
+                    Collections.sort(lista);
                     Gson g = new Gson();
                     resultado = g.toJson(lista);
                     resultado = "{\"data\":" + resultado + "}";

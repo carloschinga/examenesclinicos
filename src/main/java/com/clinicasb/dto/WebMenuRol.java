@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "WebMenuRol.findAll", query = "SELECT w FROM WebMenuRol w"),
     @NamedQuery(name = "WebMenuRol.findByCodrol", query = "SELECT w FROM WebMenuRol w WHERE w.codrol = :codrol"),
     @NamedQuery(name = "WebMenuRol.findByNomrol", query = "SELECT w FROM WebMenuRol w WHERE w.nomrol = :nomrol")})
-public class WebMenuRol implements Serializable {
+public class WebMenuRol implements Serializable , Comparable<WebMenuRol>{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -85,5 +85,15 @@ public class WebMenuRol implements Serializable {
     public String toString() {
         return "com.clinicasb.dto.WebMenuRol[ codrol=" + codrol + " ]";
     }
-    
+    public int compareTo(WebMenuRol s) {
+        int compare = s.nomrol.compareTo(nomrol);
+
+        if (compare < 0) {
+            return 1;
+        } else if (compare > 0) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
 }

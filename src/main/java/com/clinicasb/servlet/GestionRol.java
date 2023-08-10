@@ -41,14 +41,14 @@ public class GestionRol extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            Gson g= new Gson();
+            Gson g = new Gson();
             String resultado = "";
             String accion = request.getParameter("accion");
             switch (accion) {
                 case "seleccionar":
                     String codigo = request.getParameter("codigo");
                     WebMenuRolJpaController wmrDAO = new WebMenuRolJpaController();
-                    WebMenuRol wmr=  wmrDAO.findWebMenuRol(Integer.parseInt(codigo));
+                    WebMenuRol wmr = wmrDAO.findWebMenuRol(Integer.parseInt(codigo));
                     resultado = g.toJson(wmr);
                     break;
                 case "agregar":
@@ -72,6 +72,7 @@ public class GestionRol extends HttpServlet {
                     } catch (Exception ex) {
                         resultado = "{\"resultado\":\"error\"}";
                     }
+                    break;
                 case "editar":
                     try {
                         codigo = request.getParameter("codigo");
@@ -85,7 +86,7 @@ public class GestionRol extends HttpServlet {
                     } catch (Exception exe) {
                         resultado = "{\"resultado\":\"error\"}";
                     }
-                break;
+                    break;
             }
             out.print(resultado);
         }
