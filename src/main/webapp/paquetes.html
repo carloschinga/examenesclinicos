@@ -136,7 +136,7 @@
                     <div class="modal-body">Seleccione "Cerrar sesión"  si está listo para finalizar su sesión actual.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                        <a class="btn btn-primary" href="index.html">Salir</a>
+                        <a class="btn btn-primary" id="salir">Salir</a>
                     </div>
                 </div>
             </div>
@@ -283,7 +283,7 @@
                     table.ajax.reload( );
                 });
 
-                $("#salir").click(function () {
+                $("#salir").click(function () {                    
                     $.getJSON("cerrarsesion", function (data) {});
                     $(location).attr('href', "index.html");
                 });
