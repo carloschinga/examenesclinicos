@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  * @author USUARIO
  */
 @WebServlet(name = "Menu", urlPatterns = {"/menu"})
-public class Menu extends HttpServlet {
+public class Menu1 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

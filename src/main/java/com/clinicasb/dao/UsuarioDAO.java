@@ -1,7 +1,12 @@
 package com.clinicasb.dao;
 
 import com.clinicasb.dto.Usuarios;
+import com.clinicasb.util.Cripto;
+import static com.clinicasb.util.Cripto.getSHA;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -85,17 +90,24 @@ public class UsuarioDAO {
     }
 
     public static void main(String[] args) {
-        Usuarios u = UsuarioDAO.logueo("kike", "12yvvyvvy34");
-        if (u == null) {
+        try {
+            String pass="1234";
+            pass = Cripto.toHexString(getSHA(pass.toUpperCase()));
+            /*Usuarios u = UsuarioDAO.logueo("kike", "12yvvyvvy34");
+            if (u == null) {
             System.out.println("Usuario no existe");
-        } else {
+            } else {
             System.out.println("El usuario es:" + u.getUseusr());
-        }
-
-        /*List<Usuario> lista= UsuarioDAO.listar();
-        for (Usuario u : lista) {
+            }*/
+            
+            /*List<Usuario> lista= UsuarioDAO.listar();
+            for (Usuario u : lista) {
             System.out.println(u.getLogiUsua());
-        }*/
+            }*/
+            System.out.println(pass);
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     /**

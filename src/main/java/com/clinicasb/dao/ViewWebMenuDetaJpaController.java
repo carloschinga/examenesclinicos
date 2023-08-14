@@ -146,6 +146,18 @@ public class ViewWebMenuDetaJpaController implements Serializable {
             em.close();
         }
     }
+      public ViewWebMenuDeta buscarXCodigoYUseCod(int Codi, int usecod) {
+        EntityManager em = getEntityManager();
+        try {            
+            Query q = em.createNamedQuery("ViewWebMenuDeta.findByCodmenYUsecod");
+            q.setParameter("codmen", Codi);
+            q.setParameter("usecod", usecod);
+            ViewWebMenuDeta v=(ViewWebMenuDeta) q.getSingleResult();
+            return v;        
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     public int getViewWebMenuDetaCount() {
         EntityManager em = getEntityManager();
@@ -176,6 +188,7 @@ public class ViewWebMenuDetaJpaController implements Serializable {
         }
     }
     
+   
     public static void main(String[] args) {
         ViewWebMenuDetaJpaController dao= new ViewWebMenuDetaJpaController();
         List<ViewWebMenuDeta> lista=dao.listarXCodRol(1);

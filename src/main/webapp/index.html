@@ -95,20 +95,28 @@
             $(document).ready(function () {
                 $("#btnIngresar").click(function () {
                     let logi = $("#txtUsuario").val();
-                    let pass = $("#txtClave").val();                    
+                    let pass = $("#txtClave").val();
                     let parametro = {logi: logi, pass: pass};
                     $.getJSON("validar", parametro, function (data) {
-                        if (data.resultado === "ok") {                   
+                        if (data.resultado === "ok") {
                             console.log(data);
-                            parametro = {logi: data.user,nombre: data.name,nivel:data.nivel, codi:data.codi};
+                            parametro = {logi: data.user, nombre: data.name, nivel: data.nivel, codi: data.codi};
                             $.getJSON("iniciarsesion", parametro, function (data) {
-                                
-                            }); 
+
+                            });
                             $(location).attr('href', "principal.html");
                         } else {
                             $("#alerta").css('visibility', 'visible');
                         }
                     });
+                });
+
+                
+                $('#txtClave').keypress(function (e) {
+                    if (e.which === 13) {
+                        //e.preventDefault();
+                        $( "#btnIngresar" ).trigger( "click" );
+                    }
                 });
             });
         </script>

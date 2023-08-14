@@ -261,6 +261,7 @@
                         parametro = {accion: "listarol"};
                         $.getJSON("asignarpermiso", parametro, function (data) {
                             $.each(data.data, function (id, med) {
+                                
                                 $('#cmbRol1').append('<option value=' + med.codrol + '>' + med.nomrol + '</option>');
                                 $('#cmbRol2').append('<option value=' + med.codrol + '>' + med.nomrol + '</option>');
 
@@ -268,7 +269,7 @@
                                 $.get("menurol", parametro, function (data) {
                                     data = data.substring(0, data.length - 1);
                                     data = "[" + data + "]";
-                                    //console.log(data);
+                                    console.log(data);
                                     var obj = $.parseJSON(data);
                                     //console.log(obj);                    
                                     $('#jstree').jstree({
@@ -370,7 +371,7 @@
                             }
                         }
                     });
-                    //console.log($("#cmbRol2").val());
+                    console.log(selected);
                     let parametro = {accion: "asignarAcceso", codrol: $("#cmbRol2").val(), selected: JSON.stringify(selected)};
                     $.getJSON("asignarpermiso", parametro, function (data) {
                         var x = document.getElementById("okAccesosdelrol");

@@ -24,6 +24,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "ViewWebMenuDeta.findAll", query = "SELECT v FROM ViewWebMenuDeta v"),
     @NamedQuery(name = "ViewWebMenuDeta.findByCodmen", query = "SELECT v FROM ViewWebMenuDeta v WHERE v.codmen = :codmen"),
+    @NamedQuery(name = "ViewWebMenuDeta.findByCodmenYUsecod", query = "SELECT v FROM ViewWebMenuDeta v WHERE v.codmen = :codmen and v.usecod = :usecod"),
     @NamedQuery(name = "ViewWebMenuDeta.findByNommen", query = "SELECT v FROM ViewWebMenuDeta v WHERE v.nommen = :nommen"),
     @NamedQuery(name = "ViewWebMenuDeta.findByCodrol", query = "SELECT v FROM ViewWebMenuDeta v WHERE v.codrol = :codrol"),
     @NamedQuery(name = "ViewWebMenuDeta.findByCodmas", query = "SELECT v FROM ViewWebMenuDeta v WHERE v.codmas = :codmas"),
