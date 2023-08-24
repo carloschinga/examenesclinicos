@@ -269,9 +269,9 @@
                                 $.get("menurol", parametro, function (data) {
                                     data = data.substring(0, data.length - 1);
                                     data = "[" + data + "]";
-                                    console.log(data);
+                                    console.log("final data:"+data);
                                     var obj = $.parseJSON(data);
-                                    //console.log(obj);                    
+                                    console.log("final objjson:" + obj);                    
                                     $('#jstree').jstree({
                                         'plugins': ["wholerow", "checkbox", "types"],
                                         'core': {

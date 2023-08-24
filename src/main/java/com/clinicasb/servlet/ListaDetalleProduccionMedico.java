@@ -4,12 +4,13 @@
  */
 package com.clinicasb.servlet;
 
-import com.clinicasb.dao.ViewWebMenuDetaJpaController;
-import com.clinicasb.dao.ViewWebMenuDetaRolJpaController;
-import com.clinicasb.dto.ViewWebMenuDeta;
-import com.clinicasb.dto.ViewWebMenuDetaRol;
+import com.clinicasb.dao.ViewProduccionMedicosJpaController;
+import com.clinicasb.dto.ViewProduccionMedicos;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author USUARIO
  */
-@WebServlet(name = "MenuRol", urlPatterns = {"/menurol"})
-public class MenuRol extends HttpServlet {
+@WebServlet(name = "ListaDetalleProduccionMedico", urlPatterns = {"/listadetalleproduccionmedico"})
+public class ListaDetalleProduccionMedico extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,29 +38,25 @@ public class MenuRol extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String codrol = request.getParameter("codrol");
-            ViewWebMenuDetaRolJpaController menuDetaRolDAO = new ViewWebMenuDetaRolJpaController();
-            List<ViewWebMenuDetaRol> lista = menuDetaRolDAO.listarXCodRol(Integer.parseInt(codrol));
 
-            String resultado = "";
-            for (ViewWebMenuDetaRol viewWebMenuDetaRol : lista) {
-                if (viewWebMenuDetaRol.getCodmas() == 0) {
-                    if (viewWebMenuDetaRol.getAsigperm()==1) {
-                        resultado += "{ \"id\" : \"" + viewWebMenuDetaRol.getCodmen() + "\", \"parent\" : \"#\", \"text\" : \"" + viewWebMenuDetaRol.getNommen() + "\" ,\"state\":{\"selected\":true}},";
-                    } else {
-                        resultado += "{ \"id\" : \"" + viewWebMenuDetaRol.getCodmen() + "\", \"parent\" : \"#\", \"text\" : \"" + viewWebMenuDetaRol.getNommen() + "\"},";
-                    }
-                } else  if(viewWebMenuDetaRol.getCodmas()!=-1 ){
-                    if (viewWebMenuDetaRol.getAsigperm()==1) {
-                        resultado += "{ \"id\" : \"" + viewWebMenuDetaRol.getCodmen() + "\", \"parent\" : \"" + viewWebMenuDetaRol.getCodmas() + "\", \"text\" : \"" + viewWebMenuDetaRol.getNommen() + "\" ,\"state\":{\"selected\":true}},";
-                    } else {
-                        resultado += "{ \"id\" : \"" + viewWebMenuDetaRol.getCodmen() + "\", \"parent\" : \"" + viewWebMenuDetaRol.getCodmas() + "\", \"text\" : \"" + viewWebMenuDetaRol.getNommen() + "\"},";
-                    }
-                }
-
+            String fechaInicio = request.getParameter("fechaInicio");
+            String fechaFin = request.getParameter("fechaFin");
+            String sercod = request.getParameter("sercod");
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            Date filtroInicio = null, filtroFin = null;
+            try {
+                filtroInicio = formato.parse(fechaInicio);
+                filtroFin = formato.parse(fechaFin);
+                ViewProduccionMedicosJpaController vpmDAO= new ViewProduccionMedicosJpaController();
+                List<ViewProduccionMedicos> lista = vpmDAO.listar(filtroInicio, filtroFin,sercod);
+                Gson g = new Gson();
+                String resultado = g.toJson(lista);
+                resultado = "{\"data\":" + resultado + "}";
+                out.print(resultado);
+            } catch (Exception ex) {
+                String resultado = "{\"data\":}";
+                out.println(resultado);
             }
-            out.print(resultado);
         }
     }
 
