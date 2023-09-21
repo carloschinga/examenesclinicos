@@ -347,8 +347,7 @@
                 });
 
                 $("#cmbRol2").on("change", function () {
-                    parametro = {codrol: $("#cmbRol2").val()};
-                    console.log(parametro);
+                    parametro = {codrol: $("#cmbRol2").val()};                    
                     $.get("menurol", parametro, function (data) {
                         data = data.substring(0, data.length - 1);
                         $('#jstree').jstree(true).settings.core.data = $.parseJSON("[]");
@@ -407,8 +406,7 @@
                     $('#lblTituloEdicionRol').text("Editar Rol");
                     
                     let parametro={accion:"seleccionar",codigo:$('#cmbRol2').val()};
-                    $.getJSON("gestionrol", parametro, function (data) {
-                        console.log(data);
+                    $.getJSON("gestionrol", parametro, function (data) {                        
                         $('#txtCodigoRol').val(data.codrol);
                         $('#txtNombreRol').val(data.nomrol);
                     });
