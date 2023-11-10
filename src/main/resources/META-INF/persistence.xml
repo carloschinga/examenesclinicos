@@ -28,6 +28,7 @@
     <class>com.clinicasb.dto.ViewTrazabilidadProcedimiento</class>
     <class>com.clinicasb.dto.TipoTarifa</class>
     <class>com.clinicasb.dto.Tarifario</class>
+    <class>com.clinicasb.dto.ProcedimientosCabecera</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://192.168.0.29\SERVILOLCLI20:1433;databaseName=LOLCLI9000"/>

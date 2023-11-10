@@ -4,8 +4,10 @@
  */
 package com.clinicasb.servlet;
 
+import com.clinicasb.dao.ProcedimientosCabeceraJpaController;
 import com.clinicasb.dao.ProcedimientosDetalleJpaController;
 import com.clinicasb.dao.ProcedimientosResultadosJpaController;
+import com.clinicasb.dto.ProcedimientosCabecera;
 import com.clinicasb.dto.ProcedimientosDetalle;
 import com.clinicasb.dto.ProcedimientosDetallePK;
 import com.clinicasb.dto.ProcedimientosResultados;
@@ -48,6 +50,8 @@ public class EliminarAprobProcedimiento extends HttpServlet {
                         Integer.parseInt(numitm));
                 ProcedimientosResultados pr = prDAO.findProcedimientosResultados(prPK);
 
+                pr.setEstres("G");
+                pr.setMedcod("0000");
                 pr.setUsecodApr(null);
                 pr.setFeccreApr(null);
                 pr.setHostnameApr(null);
@@ -58,10 +62,13 @@ public class EliminarAprobProcedimiento extends HttpServlet {
                 ProcedimientosDetalle pd= new ProcedimientosDetalle(pdPK);
                 ProcedimientosDetalleJpaController pdDAO= new ProcedimientosDetalleJpaController();
                 pd= pdDAO.findProcedimientosDetalle(pdPK);
+                pd.setEstexa("G");
                 pd.setExaapr("N");
                 pdDAO.edit(pd);
                 
-                
+                ProcedimientosCabeceraJpaController pcDAO= new ProcedimientosCabeceraJpaController();
+                ProcedimientosCabecera pc= pcDAO.findProcedimientosCabecera(Integer.parseInt(invnum));
+                pc.setEstord("G");
                 out.print("{\"resultado\":\"ok\"}");
             } catch (Exception ex) {
                 out.print("{\"resultado\":\"error\"}");
