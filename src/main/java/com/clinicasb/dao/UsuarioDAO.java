@@ -5,8 +5,6 @@ import com.clinicasb.util.Cripto;
 import static com.clinicasb.util.Cripto.getSHA;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;

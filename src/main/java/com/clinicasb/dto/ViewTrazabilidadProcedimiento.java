@@ -23,39 +23,33 @@ import javax.validation.constraints.Size;
  * @author USUARIO
  */
 @Entity
-@Table(name = "view_trazabilidad_ea")
+@Table(name = "view_trazabilidad_procedimiento")
 @NamedQueries({
-    @NamedQuery(name = "ViewTrazabilidadEa.findAll", query = "SELECT v FROM ViewTrazabilidadEa v"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaFiltroBeetwen", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaFiltro BETWEEN :startDate and :endDate ORDER BY v.secuencia"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findBySecuencia", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.secuencia = :secuencia"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByNumitm", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.numitm = :numitm"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByHistoria", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.historia = :historia"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByPaciente", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.paciente = :paciente"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByTipoPlan", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.tipoPlan = :tipoPlan"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByExamen", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.examen = :examen"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaOrden", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaOrden = :fechaOrden"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaCreacion", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaCreacion = :fechaCreacion"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaFiltro", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaFiltro = :fechaFiltro"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByTieneCreacion", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.tieneCreacion = :tieneCreacion"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaPago", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaPago = :fechaPago"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByTienePago", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.tienePago = :tienePago"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByDiasDemoraPago", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.diasDemoraPago = :diasDemoraPago"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaTomaExamen", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaTomaExamen = :fechaTomaExamen"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByTieneTomaExamen", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.tieneTomaExamen = :tieneTomaExamen"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByDiasDemoraExamen", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.diasDemoraExamen = :diasDemoraExamen"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaResultado", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaResultado = :fechaResultado"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByTieneResultado", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.tieneResultado = :tieneResultado"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByDiasDemoraResultado", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.diasDemoraResultado = :diasDemoraResultado"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByFechaAprobado", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.fechaAprobado = :fechaAprobado"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByTieneAprobado", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.tieneAprobado = :tieneAprobado"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByDiasDemoraAprobado", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.diasDemoraAprobado = :diasDemoraAprobado"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByMes", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.mes = :mes"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByDia", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.dia = :dia"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByAnio", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.anio = :anio"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findBySemana", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.semana = :semana"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByMedcod", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.medcod = :medcod"),
-    @NamedQuery(name = "ViewTrazabilidadEa.findByExaapr", query = "SELECT v FROM ViewTrazabilidadEa v WHERE v.exaapr = :exaapr")})
-public class ViewTrazabilidadEa implements Serializable {
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findAll", query = "SELECT v FROM ViewTrazabilidadProcedimiento v"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByFechaFiltroBeetwen", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.fechaFiltro BETWEEN :startDate and :endDate ORDER BY v.secuencia"), 
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findBySecuencia", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.secuencia = :secuencia"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByNumitm", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.numitm = :numitm"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByHistoria", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.historia = :historia"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByPaciente", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.paciente = :paciente"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByTipoPlan", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.tipoPlan = :tipoPlan"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByExamen", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.examen = :examen"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByFechaOrden", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.fechaOrden = :fechaOrden"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByFechaCreacion", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByFechaFiltro", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.fechaFiltro = :fechaFiltro"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByTieneCreacion", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.tieneCreacion = :tieneCreacion"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByFechaPago", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.fechaPago = :fechaPago"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByTienePago", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.tienePago = :tienePago"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByDiasDemoraPago", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.diasDemoraPago = :diasDemoraPago"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByFechaTomaExamen", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.fechaTomaExamen = :fechaTomaExamen"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByTieneTomaExamen", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.tieneTomaExamen = :tieneTomaExamen"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByFechaResultado", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.fechaResultado = :fechaResultado"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByTieneResultado", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.tieneResultado = :tieneResultado"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByFechaAprobado", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.fechaAprobado = :fechaAprobado"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByTieneAprobado", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.tieneAprobado = :tieneAprobado"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByMedcod", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.medcod = :medcod"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByExaapr", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.exaapr = :exaapr"),
+    @NamedQuery(name = "ViewTrazabilidadProcedimiento.findByPactel", query = "SELECT v FROM ViewTrazabilidadProcedimiento v WHERE v.pactel = :pactel")})
+public class ViewTrazabilidadProcedimiento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -83,20 +77,22 @@ public class ViewTrazabilidadEa implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 6)
+    @Size(min = 1, max = 40)
     @Column(name = "TipoPlan")
     private String tipoPlan;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 40)
+    @Size(min = 1, max = 70)
     @Column(name = "Examen")
     private String examen;
+    @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "FechaOrden")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaOrden;
+    @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "FechaCreacion")
@@ -105,64 +101,67 @@ public class ViewTrazabilidadEa implements Serializable {
     @Column(name = "FechaFiltro")
     @Temporal(TemporalType.DATE)
     private Date fechaFiltro;
+    @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "TieneCreacion")
     private int tieneCreacion;
     @Column(name = "FechaPago")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaPago;
+    private Integer fechaPago;
+    @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "TienePago")
     private int tienePago;
+    @Id
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "diasDemoraPago")
-    private Integer diasDemoraPago;
+    private int diasDemoraPago;
+    @Id
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "FechaTomaExamen")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaTomaExamen;
+    @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "TieneTomaExamen")
     private int tieneTomaExamen;
-    @Column(name = "diasDemoraExamen")
-    private Integer diasDemoraExamen;
     @Column(name = "FechaResultado")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaResultado;
+    @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "TieneResultado")
     private int tieneResultado;
-    @Column(name = "diasDemoraResultado")
-    private Integer diasDemoraResultado;
     @Column(name = "FechaAprobado")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaAprobado;
+    @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "TieneAprobado")
     private int tieneAprobado;
-    @Column(name = "diasDemoraAprobado")
-    private Integer diasDemoraAprobado;
-    @Column(name = "mes")
-    private Integer mes;
-    @Column(name = "dia")
-    private Integer dia;
-    @Column(name = "anio")
-    private Integer anio;
-    @Column(name = "semana")
-    private Integer semana;
-    @Size(max = 4)
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 4)
     @Column(name = "medcod")
     private String medcod;
+    @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
     @Column(name = "exaapr")
     private String exaapr;
+    @Size(max = 25)
+    @Column(name = "pactel")
+    private String pactel;
 
-    public ViewTrazabilidadEa() {
+    public ViewTrazabilidadProcedimiento() {
     }
 
     public int getSecuencia() {
@@ -245,11 +244,11 @@ public class ViewTrazabilidadEa implements Serializable {
         this.tieneCreacion = tieneCreacion;
     }
 
-    public Date getFechaPago() {
+    public Integer getFechaPago() {
         return fechaPago;
     }
 
-    public void setFechaPago(Date fechaPago) {
+    public void setFechaPago(Integer fechaPago) {
         this.fechaPago = fechaPago;
     }
 
@@ -261,11 +260,11 @@ public class ViewTrazabilidadEa implements Serializable {
         this.tienePago = tienePago;
     }
 
-    public Integer getDiasDemoraPago() {
+    public int getDiasDemoraPago() {
         return diasDemoraPago;
     }
 
-    public void setDiasDemoraPago(Integer diasDemoraPago) {
+    public void setDiasDemoraPago(int diasDemoraPago) {
         this.diasDemoraPago = diasDemoraPago;
     }
 
@@ -285,14 +284,6 @@ public class ViewTrazabilidadEa implements Serializable {
         this.tieneTomaExamen = tieneTomaExamen;
     }
 
-    public Integer getDiasDemoraExamen() {
-        return diasDemoraExamen;
-    }
-
-    public void setDiasDemoraExamen(Integer diasDemoraExamen) {
-        this.diasDemoraExamen = diasDemoraExamen;
-    }
-
     public Date getFechaResultado() {
         return fechaResultado;
     }
@@ -307,14 +298,6 @@ public class ViewTrazabilidadEa implements Serializable {
 
     public void setTieneResultado(int tieneResultado) {
         this.tieneResultado = tieneResultado;
-    }
-
-    public Integer getDiasDemoraResultado() {
-        return diasDemoraResultado;
-    }
-
-    public void setDiasDemoraResultado(Integer diasDemoraResultado) {
-        this.diasDemoraResultado = diasDemoraResultado;
     }
 
     public Date getFechaAprobado() {
@@ -333,46 +316,6 @@ public class ViewTrazabilidadEa implements Serializable {
         this.tieneAprobado = tieneAprobado;
     }
 
-    public Integer getDiasDemoraAprobado() {
-        return diasDemoraAprobado;
-    }
-
-    public void setDiasDemoraAprobado(Integer diasDemoraAprobado) {
-        this.diasDemoraAprobado = diasDemoraAprobado;
-    }
-
-    public Integer getMes() {
-        return mes;
-    }
-
-    public void setMes(Integer mes) {
-        this.mes = mes;
-    }
-
-    public Integer getDia() {
-        return dia;
-    }
-
-    public void setDia(Integer dia) {
-        this.dia = dia;
-    }
-
-    public Integer getAnio() {
-        return anio;
-    }
-
-    public void setAnio(Integer anio) {
-        this.anio = anio;
-    }
-
-    public Integer getSemana() {
-        return semana;
-    }
-
-    public void setSemana(Integer semana) {
-        this.semana = semana;
-    }
-
     public String getMedcod() {
         return medcod;
     }
@@ -387,6 +330,14 @@ public class ViewTrazabilidadEa implements Serializable {
 
     public void setExaapr(String exaapr) {
         this.exaapr = exaapr;
+    }
+
+    public String getPactel() {
+        return pactel;
+    }
+
+    public void setPactel(String pactel) {
+        this.pactel = pactel;
     }
     
 }

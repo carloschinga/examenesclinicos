@@ -6,9 +6,8 @@ package com.clinicasb.dao;
 
 import com.clinicasb.dao.exceptions.NonexistentEntityException;
 import com.clinicasb.dao.exceptions.PreexistingEntityException;
-import com.clinicasb.dto.ViewProgramacionMedicoServicio;
+import com.clinicasb.dto.TipoTarifa;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -22,31 +21,30 @@ import javax.persistence.criteria.Root;
  *
  * @author USUARIO
  */
-public class ViewProgramacionMedicoServicioJpaController implements Serializable {
+public class TipoTarifaJpaController implements Serializable {
 
-    public ViewProgramacionMedicoServicioJpaController(EntityManagerFactory emf) {
+    public TipoTarifaJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.clinicasb.persis");
 
-    public ViewProgramacionMedicoServicioJpaController() {
+    public TipoTarifaJpaController() {
     }
-
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(ViewProgramacionMedicoServicio viewProgramacionMedicoServicio) throws PreexistingEntityException, Exception {
+    public void create(TipoTarifa tipoTarifa) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(viewProgramacionMedicoServicio);
+            em.persist(tipoTarifa);
             em.getTransaction().commit();
         } catch (Exception ex) {
-            if (findViewProgramacionMedicoServicio(viewProgramacionMedicoServicio.getSercod()) != null) {
-                throw new PreexistingEntityException("ViewProgramacionMedicoServicio " + viewProgramacionMedicoServicio + " already exists.", ex);
+            if (findTipoTarifa(tipoTarifa.getTtacod()) != null) {
+                throw new PreexistingEntityException("TipoTarifa " + tipoTarifa + " already exists.", ex);
             }
             throw ex;
         } finally {
@@ -56,19 +54,19 @@ public class ViewProgramacionMedicoServicioJpaController implements Serializable
         }
     }
 
-    public void edit(ViewProgramacionMedicoServicio viewProgramacionMedicoServicio) throws NonexistentEntityException, Exception {
+    public void edit(TipoTarifa tipoTarifa) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            viewProgramacionMedicoServicio = em.merge(viewProgramacionMedicoServicio);
+            tipoTarifa = em.merge(tipoTarifa);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = viewProgramacionMedicoServicio.getSercod();
-                if (findViewProgramacionMedicoServicio(id) == null) {
-                    throw new NonexistentEntityException("The viewProgramacionMedicoServicio with id " + id + " no longer exists.");
+                String id = tipoTarifa.getTtacod();
+                if (findTipoTarifa(id) == null) {
+                    throw new NonexistentEntityException("The tipoTarifa with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -84,14 +82,14 @@ public class ViewProgramacionMedicoServicioJpaController implements Serializable
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            ViewProgramacionMedicoServicio viewProgramacionMedicoServicio;
+            TipoTarifa tipoTarifa;
             try {
-                viewProgramacionMedicoServicio = em.getReference(ViewProgramacionMedicoServicio.class, id);
-                viewProgramacionMedicoServicio.getSercod();
+                tipoTarifa = em.getReference(TipoTarifa.class, id);
+                tipoTarifa.getTtacod();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The viewProgramacionMedicoServicio with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The tipoTarifa with id " + id + " no longer exists.", enfe);
             }
-            em.remove(viewProgramacionMedicoServicio);
+            em.remove(tipoTarifa);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -100,19 +98,19 @@ public class ViewProgramacionMedicoServicioJpaController implements Serializable
         }
     }
 
-    public List<ViewProgramacionMedicoServicio> findViewProgramacionMedicoServicioEntities() {
-        return findViewProgramacionMedicoServicioEntities(true, -1, -1);
+    public List<TipoTarifa> findTipoTarifaEntities() {
+        return findTipoTarifaEntities(true, -1, -1);
     }
 
-    public List<ViewProgramacionMedicoServicio> findViewProgramacionMedicoServicioEntities(int maxResults, int firstResult) {
-        return findViewProgramacionMedicoServicioEntities(false, maxResults, firstResult);
+    public List<TipoTarifa> findTipoTarifaEntities(int maxResults, int firstResult) {
+        return findTipoTarifaEntities(false, maxResults, firstResult);
     }
 
-    private List<ViewProgramacionMedicoServicio> findViewProgramacionMedicoServicioEntities(boolean all, int maxResults, int firstResult) {
+    private List<TipoTarifa> findTipoTarifaEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(ViewProgramacionMedicoServicio.class));
+            cq.select(cq.from(TipoTarifa.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -124,20 +122,20 @@ public class ViewProgramacionMedicoServicioJpaController implements Serializable
         }
     }
 
-    public ViewProgramacionMedicoServicio findViewProgramacionMedicoServicio(String id) {
+    public TipoTarifa findTipoTarifa(String id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(ViewProgramacionMedicoServicio.class, id);
+            return em.find(TipoTarifa.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getViewProgramacionMedicoServicioCount() {
+    public int getTipoTarifaCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<ViewProgramacionMedicoServicio> rt = cq.from(ViewProgramacionMedicoServicio.class);
+            Root<TipoTarifa> rt = cq.from(TipoTarifa.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
@@ -145,14 +143,5 @@ public class ViewProgramacionMedicoServicioJpaController implements Serializable
             em.close();
         }
     }
-     
-    public static void main(String[] args) {
-        ViewProgramacionMedicoServicioJpaController dao= new ViewProgramacionMedicoServicioJpaController();
-        List<ViewProgramacionMedicoServicio> lista=dao.findViewProgramacionMedicoServicioEntities();
-        Collections.sort(lista);
-        for (ViewProgramacionMedicoServicio viewProgramacionMedicoServicio : lista) {
-            System.out.println(viewProgramacionMedicoServicio.getSerdes());
-        }
-    }
-    
+
 }
