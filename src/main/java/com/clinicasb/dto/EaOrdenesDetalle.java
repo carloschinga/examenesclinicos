@@ -8,13 +8,11 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -238,8 +236,6 @@ public class EaOrdenesDetalle implements Serializable {
     @Size(min = 1, max = 4)
     @Column(name = "medcod1")
     private String medcod1;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "eaOrdenesDetalle")
-    private EaResultados eaResultados;
 
     public EaOrdenesDetalle() {
     }
@@ -611,14 +607,6 @@ public class EaOrdenesDetalle implements Serializable {
 
     public void setMedcod1(String medcod1) {
         this.medcod1 = medcod1;
-    }
-
-    public EaResultados getEaResultados() {
-        return eaResultados;
-    }
-
-    public void setEaResultados(EaResultados eaResultados) {
-        this.eaResultados = eaResultados;
     }
 
     @Override

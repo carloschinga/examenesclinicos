@@ -6,8 +6,8 @@ package com.clinicasb.dao;
 
 import com.clinicasb.dao.exceptions.NonexistentEntityException;
 import com.clinicasb.dao.exceptions.PreexistingEntityException;
-import com.clinicasb.dto.EaResultados;
-import com.clinicasb.dto.EaResultadosPK;
+import com.clinicasb.dto.EaResultadosImagenes;
+import com.clinicasb.dto.EaResultadosImagenesPK;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -22,33 +22,33 @@ import javax.persistence.criteria.Root;
  *
  * @author USUARIO
  */
-public class EaResultadosJpaController implements Serializable {
+public class EaResultadosImagenesJpaController implements Serializable {
 
-    public EaResultadosJpaController(EntityManagerFactory emf) {
+    public EaResultadosImagenesJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.clinicasb.persis");    
 
-    public EaResultadosJpaController() {
+    public EaResultadosImagenesJpaController() {
     }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(EaResultados eaResultados) throws PreexistingEntityException, Exception {
-        if (eaResultados.getEaResultadosPK() == null) {
-            eaResultados.setEaResultadosPK(new EaResultadosPK());
+    public void create(EaResultadosImagenes eaResultadosImagenes) throws PreexistingEntityException, Exception {
+        if (eaResultadosImagenes.getEaResultadosImagenesPK() == null) {
+            eaResultadosImagenes.setEaResultadosImagenesPK(new EaResultadosImagenesPK());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(eaResultados);
+            em.persist(eaResultadosImagenes);
             em.getTransaction().commit();
         } catch (Exception ex) {
-            if (findEaResultados(eaResultados.getEaResultadosPK()) != null) {
-                throw new PreexistingEntityException("EaResultados " + eaResultados + " already exists.", ex);
+            if (findEaResultadosImagenes(eaResultadosImagenes.getEaResultadosImagenesPK()) != null) {
+                throw new PreexistingEntityException("EaResultadosImagenes " + eaResultadosImagenes + " already exists.", ex);
             }
             throw ex;
         } finally {
@@ -58,19 +58,19 @@ public class EaResultadosJpaController implements Serializable {
         }
     }
 
-    public void edit(EaResultados eaResultados) throws NonexistentEntityException, Exception {
+    public void edit(EaResultadosImagenes eaResultadosImagenes) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            eaResultados = em.merge(eaResultados);
+            eaResultadosImagenes = em.merge(eaResultadosImagenes);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                EaResultadosPK id = eaResultados.getEaResultadosPK();
-                if (findEaResultados(id) == null) {
-                    throw new NonexistentEntityException("The eaResultados with id " + id + " no longer exists.");
+                EaResultadosImagenesPK id = eaResultadosImagenes.getEaResultadosImagenesPK();
+                if (findEaResultadosImagenes(id) == null) {
+                    throw new NonexistentEntityException("The eaResultadosImagenes with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -81,19 +81,19 @@ public class EaResultadosJpaController implements Serializable {
         }
     }
 
-    public void destroy(EaResultadosPK id) throws NonexistentEntityException {
+    public void destroy(EaResultadosImagenesPK id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            EaResultados eaResultados;
+            EaResultadosImagenes eaResultadosImagenes;
             try {
-                eaResultados = em.getReference(EaResultados.class, id);
-                eaResultados.getEaResultadosPK();
+                eaResultadosImagenes = em.getReference(EaResultadosImagenes.class, id);
+                eaResultadosImagenes.getEaResultadosImagenesPK();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The eaResultados with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The eaResultadosImagenes with id " + id + " no longer exists.", enfe);
             }
-            em.remove(eaResultados);
+            em.remove(eaResultadosImagenes);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -102,19 +102,19 @@ public class EaResultadosJpaController implements Serializable {
         }
     }
 
-    public List<EaResultados> findEaResultadosEntities() {
-        return findEaResultadosEntities(true, -1, -1);
+    public List<EaResultadosImagenes> findEaResultadosImagenesEntities() {
+        return findEaResultadosImagenesEntities(true, -1, -1);
     }
 
-    public List<EaResultados> findEaResultadosEntities(int maxResults, int firstResult) {
-        return findEaResultadosEntities(false, maxResults, firstResult);
+    public List<EaResultadosImagenes> findEaResultadosImagenesEntities(int maxResults, int firstResult) {
+        return findEaResultadosImagenesEntities(false, maxResults, firstResult);
     }
 
-    private List<EaResultados> findEaResultadosEntities(boolean all, int maxResults, int firstResult) {
+    private List<EaResultadosImagenes> findEaResultadosImagenesEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(EaResultados.class));
+            cq.select(cq.from(EaResultadosImagenes.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -126,20 +126,20 @@ public class EaResultadosJpaController implements Serializable {
         }
     }
 
-    public EaResultados findEaResultados(EaResultadosPK id) {
+    public EaResultadosImagenes findEaResultadosImagenes(EaResultadosImagenesPK id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(EaResultados.class, id);
+            return em.find(EaResultadosImagenes.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getEaResultadosCount() {
+    public int getEaResultadosImagenesCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<EaResultados> rt = cq.from(EaResultados.class);
+            Root<EaResultadosImagenes> rt = cq.from(EaResultadosImagenes.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

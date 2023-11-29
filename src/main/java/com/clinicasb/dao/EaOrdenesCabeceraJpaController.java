@@ -6,8 +6,7 @@ package com.clinicasb.dao;
 
 import com.clinicasb.dao.exceptions.NonexistentEntityException;
 import com.clinicasb.dao.exceptions.PreexistingEntityException;
-import com.clinicasb.dto.EaResultados;
-import com.clinicasb.dto.EaResultadosPK;
+import com.clinicasb.dto.EaOrdenesCabecera;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -22,33 +21,30 @@ import javax.persistence.criteria.Root;
  *
  * @author USUARIO
  */
-public class EaResultadosJpaController implements Serializable {
+public class EaOrdenesCabeceraJpaController implements Serializable {
 
-    public EaResultadosJpaController(EntityManagerFactory emf) {
+    public EaOrdenesCabeceraJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.clinicasb.persis");    
 
-    public EaResultadosJpaController() {
+    public EaOrdenesCabeceraJpaController() {
     }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(EaResultados eaResultados) throws PreexistingEntityException, Exception {
-        if (eaResultados.getEaResultadosPK() == null) {
-            eaResultados.setEaResultadosPK(new EaResultadosPK());
-        }
+    public void create(EaOrdenesCabecera eaOrdenesCabecera) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(eaResultados);
+            em.persist(eaOrdenesCabecera);
             em.getTransaction().commit();
         } catch (Exception ex) {
-            if (findEaResultados(eaResultados.getEaResultadosPK()) != null) {
-                throw new PreexistingEntityException("EaResultados " + eaResultados + " already exists.", ex);
+            if (findEaOrdenesCabecera(eaOrdenesCabecera.getInvnum()) != null) {
+                throw new PreexistingEntityException("EaOrdenesCabecera " + eaOrdenesCabecera + " already exists.", ex);
             }
             throw ex;
         } finally {
@@ -58,19 +54,19 @@ public class EaResultadosJpaController implements Serializable {
         }
     }
 
-    public void edit(EaResultados eaResultados) throws NonexistentEntityException, Exception {
+    public void edit(EaOrdenesCabecera eaOrdenesCabecera) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            eaResultados = em.merge(eaResultados);
+            eaOrdenesCabecera = em.merge(eaOrdenesCabecera);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                EaResultadosPK id = eaResultados.getEaResultadosPK();
-                if (findEaResultados(id) == null) {
-                    throw new NonexistentEntityException("The eaResultados with id " + id + " no longer exists.");
+                Integer id = eaOrdenesCabecera.getInvnum();
+                if (findEaOrdenesCabecera(id) == null) {
+                    throw new NonexistentEntityException("The eaOrdenesCabecera with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -81,19 +77,19 @@ public class EaResultadosJpaController implements Serializable {
         }
     }
 
-    public void destroy(EaResultadosPK id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            EaResultados eaResultados;
+            EaOrdenesCabecera eaOrdenesCabecera;
             try {
-                eaResultados = em.getReference(EaResultados.class, id);
-                eaResultados.getEaResultadosPK();
+                eaOrdenesCabecera = em.getReference(EaOrdenesCabecera.class, id);
+                eaOrdenesCabecera.getInvnum();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The eaResultados with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The eaOrdenesCabecera with id " + id + " no longer exists.", enfe);
             }
-            em.remove(eaResultados);
+            em.remove(eaOrdenesCabecera);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -102,19 +98,19 @@ public class EaResultadosJpaController implements Serializable {
         }
     }
 
-    public List<EaResultados> findEaResultadosEntities() {
-        return findEaResultadosEntities(true, -1, -1);
+    public List<EaOrdenesCabecera> findEaOrdenesCabeceraEntities() {
+        return findEaOrdenesCabeceraEntities(true, -1, -1);
     }
 
-    public List<EaResultados> findEaResultadosEntities(int maxResults, int firstResult) {
-        return findEaResultadosEntities(false, maxResults, firstResult);
+    public List<EaOrdenesCabecera> findEaOrdenesCabeceraEntities(int maxResults, int firstResult) {
+        return findEaOrdenesCabeceraEntities(false, maxResults, firstResult);
     }
 
-    private List<EaResultados> findEaResultadosEntities(boolean all, int maxResults, int firstResult) {
+    private List<EaOrdenesCabecera> findEaOrdenesCabeceraEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(EaResultados.class));
+            cq.select(cq.from(EaOrdenesCabecera.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -126,20 +122,20 @@ public class EaResultadosJpaController implements Serializable {
         }
     }
 
-    public EaResultados findEaResultados(EaResultadosPK id) {
+    public EaOrdenesCabecera findEaOrdenesCabecera(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(EaResultados.class, id);
+            return em.find(EaOrdenesCabecera.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getEaResultadosCount() {
+    public int getEaOrdenesCabeceraCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<EaResultados> rt = cq.from(EaResultados.class);
+            Root<EaOrdenesCabecera> rt = cq.from(EaOrdenesCabecera.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

@@ -69,6 +69,7 @@ public class EliminarAprobProcedimiento extends HttpServlet {
                 ProcedimientosCabeceraJpaController pcDAO= new ProcedimientosCabeceraJpaController();
                 ProcedimientosCabecera pc= pcDAO.findProcedimientosCabecera(Integer.parseInt(invnum));
                 pc.setEstord("G");
+                pcDAO.edit(pc);
                 out.print("{\"resultado\":\"ok\"}");
             } catch (Exception ex) {
                 out.print("{\"resultado\":\"error\"}");

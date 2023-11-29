@@ -4,17 +4,15 @@
  */
 package com.clinicasb.servlet;
 
-import com.clinicasb.dao.EaOrdenesCabeceraJpaController;
-import com.clinicasb.dao.EaOrdenesDetalleJpaController;
-import com.clinicasb.dao.EaResultadosJpaController;
-import com.clinicasb.dto.EaOrdenesCabecera;
-import com.clinicasb.dto.EaOrdenesDetalle;
-import com.clinicasb.dto.EaOrdenesDetallePK;
-import com.clinicasb.dto.EaResultados;
-import com.clinicasb.dto.EaResultadosPK;
-import com.clinicasb.dto.ProcedimientosDetalle;
+import com.clinicasb.dao.EaExamenesJpaController;
+import com.clinicasb.dao.EaGruposJpaController;
+import com.clinicasb.dto.EaExamenes;
+import com.clinicasb.dto.EaGrupos;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author USUARIO
  */
-@WebServlet(name = "EliminarAprobEA", urlPatterns = {"/eliminaraprobea"})
-public class EliminarAprobEA extends HttpServlet {
+@WebServlet(name = "EAExamenesCRUD", urlPatterns = {"/eaexamenescrud"})
+public class EAExamenesCRUD extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,39 +40,23 @@ public class EliminarAprobEA extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-
             try {
-                String invnum = request.getParameter("invnum");
-                String numitm = request.getParameter("numitm");
-
-                EaResultadosJpaController earDAO = new EaResultadosJpaController();
-                EaResultadosPK earPK = new EaResultadosPK(Integer.parseInt(invnum),
-                        Integer.parseInt(numitm));
-                EaResultados ear = earDAO.findEaResultados(earPK);
-
-                ear.setEstres("G");
-                ear.setMedcod("0000");
-                ear.setUsecodApr(null);
-                ear.setFeccreApr(null);
-                ear.setHostnameApr(null);
-                earDAO.edit(ear);
-
-                EaOrdenesDetallePK pdPK = new EaOrdenesDetallePK(Integer.parseInt(invnum),
-                        Integer.parseInt(numitm));
-                EaOrdenesDetalle pd = new EaOrdenesDetalle(pdPK);
-                EaOrdenesDetalleJpaController pdDAO = new EaOrdenesDetalleJpaController();
-                pd = pdDAO.findEaOrdenesDetalle(pdPK);
-                pd.setEstexa("G");
-                pd.setExaapr("N");
-                pdDAO.edit(pd);
-
-                EaOrdenesCabeceraJpaController pcDAO = new EaOrdenesCabeceraJpaController();
-                EaOrdenesCabecera pc = pcDAO.findEaOrdenesCabecera(Integer.parseInt(invnum));
-                pc.setEstord("G");
-                pcDAO.edit(pc);
-                out.print("{\"resultado\":\"ok\"}");
+                String accion = request.getParameter("accion");
+                String exagrp = request.getParameter("exagrp");
+                String resultado = "";
+                switch (accion) {
+                    case "1":
+                        EaGruposJpaController grupoDAO=new EaGruposJpaController();
+                        EaGrupos eag=  grupoDAO.findEaGrupos(exagrp);
+                        EaExamenesJpaController eaexaDAO = new EaExamenesJpaController();
+                        List<EaExamenes> lista = eaexaDAO.findByExagrp(eag);
+                        Gson g= new Gson();
+                        resultado= g.toJson(lista);
+                        break;
+                }
+                out.print(resultado);
             } catch (Exception ex) {
-                out.print("{\"resultado\":\"error\",\"mensaje\":\"" + ex.getMessage() + "\"}");
+                System.out.println(ex.getMessage());
             }
         }
     }

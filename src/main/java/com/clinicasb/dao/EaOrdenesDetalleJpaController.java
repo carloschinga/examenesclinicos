@@ -4,22 +4,19 @@
  */
 package com.clinicasb.dao;
 
-import com.clinicasb.dao.exceptions.IllegalOrphanException;
 import com.clinicasb.dao.exceptions.NonexistentEntityException;
 import com.clinicasb.dao.exceptions.PreexistingEntityException;
 import com.clinicasb.dto.EaOrdenesDetalle;
 import com.clinicasb.dto.EaOrdenesDetallePK;
 import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import com.clinicasb.dto.EaResultados;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -30,7 +27,7 @@ public class EaOrdenesDetalleJpaController implements Serializable {
     public EaOrdenesDetalleJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.clinicasb.persis");
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.clinicasb.persis");    
 
     public EaOrdenesDetalleJpaController() {
     }
@@ -47,21 +44,7 @@ public class EaOrdenesDetalleJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            EaResultados eaResultados = eaOrdenesDetalle.getEaResultados();
-            if (eaResultados != null) {
-                eaResultados = em.getReference(eaResultados.getClass(), eaResultados.getEaResultadosPK());
-                eaOrdenesDetalle.setEaResultados(eaResultados);
-            }
             em.persist(eaOrdenesDetalle);
-            if (eaResultados != null) {
-                EaOrdenesDetalle oldEaOrdenesDetalleOfEaResultados = eaResultados.getEaOrdenesDetalle();
-                if (oldEaOrdenesDetalleOfEaResultados != null) {
-                    oldEaOrdenesDetalleOfEaResultados.setEaResultados(null);
-                    oldEaOrdenesDetalleOfEaResultados = em.merge(oldEaOrdenesDetalleOfEaResultados);
-                }
-                eaResultados.setEaOrdenesDetalle(eaOrdenesDetalle);
-                eaResultados = em.merge(eaResultados);
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             if (findEaOrdenesDetalle(eaOrdenesDetalle.getEaOrdenesDetallePK()) != null) {
@@ -75,38 +58,12 @@ public class EaOrdenesDetalleJpaController implements Serializable {
         }
     }
 
-    public void edit(EaOrdenesDetalle eaOrdenesDetalle) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(EaOrdenesDetalle eaOrdenesDetalle) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            EaOrdenesDetalle persistentEaOrdenesDetalle = em.find(EaOrdenesDetalle.class, eaOrdenesDetalle.getEaOrdenesDetallePK());
-            EaResultados eaResultadosOld = persistentEaOrdenesDetalle.getEaResultados();
-            EaResultados eaResultadosNew = eaOrdenesDetalle.getEaResultados();
-            List<String> illegalOrphanMessages = null;
-            if (eaResultadosOld != null && !eaResultadosOld.equals(eaResultadosNew)) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("You must retain EaResultados " + eaResultadosOld + " since its eaOrdenesDetalle field is not nullable.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            if (eaResultadosNew != null) {
-                eaResultadosNew = em.getReference(eaResultadosNew.getClass(), eaResultadosNew.getEaResultadosPK());
-                eaOrdenesDetalle.setEaResultados(eaResultadosNew);
-            }
             eaOrdenesDetalle = em.merge(eaOrdenesDetalle);
-            if (eaResultadosNew != null && !eaResultadosNew.equals(eaResultadosOld)) {
-                EaOrdenesDetalle oldEaOrdenesDetalleOfEaResultados = eaResultadosNew.getEaOrdenesDetalle();
-                if (oldEaOrdenesDetalleOfEaResultados != null) {
-                    oldEaOrdenesDetalleOfEaResultados.setEaResultados(null);
-                    oldEaOrdenesDetalleOfEaResultados = em.merge(oldEaOrdenesDetalleOfEaResultados);
-                }
-                eaResultadosNew.setEaOrdenesDetalle(eaOrdenesDetalle);
-                eaResultadosNew = em.merge(eaResultadosNew);
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -124,7 +81,7 @@ public class EaOrdenesDetalleJpaController implements Serializable {
         }
     }
 
-    public void destroy(EaOrdenesDetallePK id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(EaOrdenesDetallePK id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -135,17 +92,6 @@ public class EaOrdenesDetalleJpaController implements Serializable {
                 eaOrdenesDetalle.getEaOrdenesDetallePK();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The eaOrdenesDetalle with id " + id + " no longer exists.", enfe);
-            }
-            List<String> illegalOrphanMessages = null;
-            EaResultados eaResultadosOrphanCheck = eaOrdenesDetalle.getEaResultados();
-            if (eaResultadosOrphanCheck != null) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This EaOrdenesDetalle (" + eaOrdenesDetalle + ") cannot be destroyed since the EaResultados " + eaResultadosOrphanCheck + " in its eaResultados field has a non-nullable eaOrdenesDetalle field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(eaOrdenesDetalle);
             em.getTransaction().commit();
@@ -201,5 +147,5 @@ public class EaOrdenesDetalleJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

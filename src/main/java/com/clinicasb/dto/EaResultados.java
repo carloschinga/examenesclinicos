@@ -10,12 +10,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,6 +47,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "EaResultados.findByFeccreRes", query = "SELECT e FROM EaResultados e WHERE e.feccreRes = :feccreRes"),
     @NamedQuery(name = "EaResultados.findByHostnameRes", query = "SELECT e FROM EaResultados e WHERE e.hostnameRes = :hostnameRes"),
     @NamedQuery(name = "EaResultados.findByRespacs", query = "SELECT e FROM EaResultados e WHERE e.respacs = :respacs"),
+    @NamedQuery(name = "EaResultados.findByInvnum1", query = "SELECT e FROM EaResultados e WHERE e.invnum1 = :invnum1"),
+    @NamedQuery(name = "EaResultados.findByNumitm1", query = "SELECT e FROM EaResultados e WHERE e.numitm1 = :numitm1"),
     @NamedQuery(name = "EaResultados.findBySercod", query = "SELECT e FROM EaResultados e WHERE e.sercod = :sercod")})
 public class EaResultados implements Serializable {
 
@@ -139,14 +138,17 @@ public class EaResultados implements Serializable {
     private String resexahtml;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "invnum")
+    private int invnum1;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "numitm")
+    private int numitm1;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 4)
     @Column(name = "sercod")
     private String sercod;
-    @JoinColumns({
-        @JoinColumn(name = "invnum", referencedColumnName = "invnum", insertable = false, updatable = false),
-        @JoinColumn(name = "numitm", referencedColumnName = "numitm", insertable = false, updatable = false)})
-    @OneToOne(optional = false)
-    private EaOrdenesDetalle eaOrdenesDetalle;
 
     public EaResultados() {
     }
@@ -155,7 +157,7 @@ public class EaResultados implements Serializable {
         this.eaResultadosPK = eaResultadosPK;
     }
 
-    public EaResultados(EaResultadosPK eaResultadosPK, String exacod, Date datres, String resexa, String estres, String medcod, String estado, Date feccre, Date fecumv, int usecod, String usenam, String hostname, String sercod) {
+    public EaResultados(EaResultadosPK eaResultadosPK, String exacod, Date datres, String resexa, String estres, String medcod, String estado, Date feccre, Date fecumv, int usecod, String usenam, String hostname, int invnum1, int numitm1, String sercod) {
         this.eaResultadosPK = eaResultadosPK;
         this.exacod = exacod;
         this.datres = datres;
@@ -168,6 +170,8 @@ public class EaResultados implements Serializable {
         this.usecod = usecod;
         this.usenam = usenam;
         this.hostname = hostname;
+        this.invnum1 = invnum1;
+        this.numitm1 = numitm1;
         this.sercod = sercod;
     }
 
@@ -343,20 +347,28 @@ public class EaResultados implements Serializable {
         this.resexahtml = resexahtml;
     }
 
+    public int getInvnum1() {
+        return invnum1;
+    }
+
+    public void setInvnum1(int invnum1) {
+        this.invnum1 = invnum1;
+    }
+
+    public int getNumitm1() {
+        return numitm1;
+    }
+
+    public void setNumitm1(int numitm1) {
+        this.numitm1 = numitm1;
+    }
+
     public String getSercod() {
         return sercod;
     }
 
     public void setSercod(String sercod) {
         this.sercod = sercod;
-    }
-
-    public EaOrdenesDetalle getEaOrdenesDetalle() {
-        return eaOrdenesDetalle;
-    }
-
-    public void setEaOrdenesDetalle(EaOrdenesDetalle eaOrdenesDetalle) {
-        this.eaOrdenesDetalle = eaOrdenesDetalle;
     }
 
     @Override

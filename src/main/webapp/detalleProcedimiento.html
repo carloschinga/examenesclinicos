@@ -158,8 +158,7 @@
         <script src="vendor/datatables/vfs_fonts.js" ></script>
         <script src="vendor/datatables/buttons.html5.min.js" ></script>
         <script src="vendor/datatables/buttons.print.min.js" ></script>
-
-        <script src="js/dataTables.fixedHeader.min.js" type="text/javascript"></script>
+        <script src="js/dataTables.fixedHeader.min.js" ></script>
         <!-- moment js -->
         <script src="js/moment.min.js" ></script>
         <script>
@@ -214,7 +213,7 @@
                         aria: {
                             sortAscending: ": activate to sort column ascending",
                             sortDescending: ": activate to sort column descending"
-                        },
+                        }
                     },
                     columns: [
                         {data: 'secuencia'},
@@ -231,14 +230,6 @@
                                     return moment(data).format("DD/MM/yyyy hh:mm:ss A");
                             }
                         },
-                        /*{data: 'fechaPago',
-                            render: function (data, type, row, meta) {
-                                if (data === undefined)
-                                    return "";
-                                else
-                                    return moment(data).format("DD/MM/yyyy hh:mm:ss A");
-                            }
-                        },*/
                         {data: 'fechaTomaExamen',
                             render: function (data, type, row, meta) {
                                 if (data === undefined)
@@ -246,15 +237,7 @@
                                 else
                                     return moment(data).format("DD/MM/yyyy hh:mm:ss A");
                             }
-                        },
-                        /*{data: 'fechaResultado',
-                            render: function (data, type, row, meta) {
-                                if (data === undefined)
-                                    return "";
-                                else
-                                    return moment(data).format("DD/MM/yyyy hh:mm:ss A");
-                            }
-                        },*/
+                        },                       
                         {
                             data: 'fechaAprobado',
                             render: function (data, type, row, meta) {
@@ -276,11 +259,9 @@
                                     return "<a href='https://web.whatsapp.com/' target='_blank'> chatear</a>";
                                 }else{
                                     return "El Celular NO es Valido";
-                                }
-                                
+                                }                                
                             }
                         },
-
                         {data: 'fechaAprobado', render: function (data, type, row, meta) {
                                 if (data === undefined) {
                                     return "";
@@ -294,17 +275,8 @@
                         }
                     ]
                 });
-                /*$('#fechaInicio').change(function () {
-                 $('#fechaFin').val($('#fechaInicio').val());
-                 table.ajax.reload( );
-                 });
-                 $('#fechaFin').change(function () {
-                 table.ajax.reload( );
-                 });*/
-
                 $("#btnBuscar").click(function () {
                     table.ajax.reload( );
-
                 });
                 $("#salir").click(function () {
                     $.getJSON("cerrarsesion", function (data) {});
@@ -312,18 +284,11 @@
                 });
             });
             function descargar(id) {
-                //console.log(id)
-
                 let parametro = {medcod: id.medcod};
                 window.open("reporteresultadoprocedimiento?invnum=" + id.invnum + "&numitm=" + id.numitm + "&pacnam="+id.pacnam+"&medcod=" + id.medcod, "_blank");
-
-                //window.open("reporteresultado?invnum="+id.invnum+"&numitm="+id.numitm+"&medcod="+id.medcod, "_blank");                
             }
             function validarSoloNumeros(texto) {
-                // Expresión regular para verificar si el texto contiene solo números
                 var regex = /^[0-9]+$/;
-
-                // Retorna true si el texto contiene solo números, de lo contrario, retorna false
                 return regex.test(texto);
             }
         </script>
