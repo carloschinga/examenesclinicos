@@ -189,14 +189,23 @@ public class EaExamenesJpaController implements Serializable {
         }
     }
 
-    public List<EaExamenes> findByExagrp(EaGrupos exagrp) {
+    public String findByExagrp(String exagrp) {
         EntityManager em = getEntityManager();
         try {
-            String jpql = "SELECT e FROM EaExamenes e WHERE e.exagrp = :exagrp";
-            TypedQuery<EaExamenes> query = em.createQuery(jpql, EaExamenes.class);
-            query.setParameter("exagrp", exagrp);
-            return query.getResultList();
-        } finally {
+            String resultado="";
+            String consulta="SELECT * FROM ea_examenes where exagrp='"+exagrp+"' for json path";
+            Query nativeQuery = em.createNativeQuery(consulta);            
+            List<String> jsonResults = nativeQuery.getResultList();
+            for (String string : jsonResults) {
+                resultado+=string;
+            }           
+            if(resultado.equals(""))
+                return "{\"data\": []}";
+            return "{\"data\": "+resultado+"}";
+        }catch(Exception ex) {
+            return null;
+        }
+        finally {
             em.close();
         }
     }

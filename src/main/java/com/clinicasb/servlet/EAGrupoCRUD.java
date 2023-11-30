@@ -45,9 +45,7 @@ public class EAGrupoCRUD extends HttpServlet {
             switch (accion) {
                 case "1":
                     EaGruposJpaController eagrupoDAO= new EaGruposJpaController();                    
-                    List<Grupo> lista=eagrupoDAO.listar();
-                    Gson g= new Gson();
-                    resultado=g.toJson(lista);
+                    resultado= eagrupoDAO.listar();                    
                     break;
             }
             out.print(resultado);

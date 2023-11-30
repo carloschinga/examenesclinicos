@@ -48,10 +48,8 @@ public class EAExamenesCRUD extends HttpServlet {
                     case "1":
                         EaGruposJpaController grupoDAO=new EaGruposJpaController();
                         EaGrupos eag=  grupoDAO.findEaGrupos(exagrp);
-                        EaExamenesJpaController eaexaDAO = new EaExamenesJpaController();
-                        List<EaExamenes> lista = eaexaDAO.findByExagrp(eag);
-                        Gson g= new Gson();
-                        resultado= g.toJson(lista);
+                        EaExamenesJpaController eaexaDAO = new EaExamenesJpaController();                        
+                        resultado=eaexaDAO.findByExagrp(exagrp);
                         break;
                 }
                 out.print(resultado);

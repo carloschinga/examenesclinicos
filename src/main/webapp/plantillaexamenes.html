@@ -57,7 +57,7 @@
                     <div class="container-fluid">
                         <br/>
                         <div class="row">                            
-                            <div class="col-6">
+                            <div class="col-lg-6 col-md-12 col-sm-12">
                                 <div class="card">                            
                                     <div class="card-body">
                                         <center> <h5 class="card-title">LISTADO DE PLANTILLA DE  EXAMENES AUXILIARES</h5></center>
@@ -200,12 +200,11 @@
                         $('#footer').load('footer.html');
 
                         //LLENAR COMBOS
-                        $.getJSON("eagrupocrud", {accion: 1}, function (data) {                            
-                            console.log(data);
-                            for(let i=0;i<data.length;i++){                                
-                                const isSelected = (i === 0) ? 'selected' : '';
-                                $("#cmbGrupo").append("<option value=" + data[i][0] + " "+ isSelected + ">" + data[i][1] + "</option>");
-                            }                            
+                        $.getJSON("eagrupocrud", {accion: 1}, function (data) {                                                        
+                            $.each(data, function (id, value) {
+                                $("#cmbGrupo").append("<option value="+ value.exagrp + ">" + value.desgrp + "</option>");
+                            });
+                            
                             tableProce = $('#tblProce').DataTable({
                                 fixedHeader: true,
                                 paging: false,
@@ -242,9 +241,9 @@
                                     }
                                 },
                                 columns: [
-                                    {data: 'tarcod'},
-                                    {data: 'tardes'},
-                                    {data: 'tarcod',
+                                    {data: 'exacod'},
+                                    {data: 'exades'},
+                                    {data: 'exacod',
                                         render: function (data, type, row, meta) {
                                             let objselec = {tarcod:row.tarcod,tarhtml: row.tarhtml};
                                             let myJSON = JSON.stringify(objselec);
@@ -276,7 +275,7 @@
                     }
                 });
 
-                $('#cmbTipoTarifa').on('change', function () {
+                $('#cmbGrupo').on('change', function () {
                     tableProce.ajax.reload( );
                 });
 
@@ -327,32 +326,15 @@
                 $("#RichText").modal("show");
 
             }
-            function descargar(id) {
-                //c pued crear un servlet que valide si existe medico.getNamFirm(), antes de proceder
+            function descargar(id) {                
                 let parametro = {medcod: id.medcod};
                 $.getJSON("validarf", parametro, function (data) {
                     if (data.resultado === "ok") {
-
-                        //alert("El archivo debe estar guardado en un ruta publica");
-                        /*
-                         var pdfUrl = 'file:///D:/pdf/P20231030_CUSIPAUCARMENDOZACHRISTIAN-0159187-20274-1.pdf';
-                         window.open(pdfUrl, "_blank");*/
-
-                        //window.open("reporteresultadoprocemostrarPDF?archivo=" + id.namfile, "_blank"); 
-                        //codigo que genera el archivo
-                        /*$.getJSON("reporteresultadoprocemostrarPDF?invnum=" + id.invnum + "&numitm=" + id.numitm + "&medcod=" + id.medcod+"&pachis="+id.pachis, function (data) {
-                         if(data.resultado==="ok")
-                         alert("creo el pdf");
-                         else
-                         alert("NO pudo crear el PDF");
-                         });*/
                         window.open("reporteresultadoprocePDF?invnum=" + id.invnum + "&numitm=" + id.numitm + "&medcod=" + id.medcod, "_blank");
                     } else {
-
                         alert("Debe ingresar una firma. Vaya a CONFIGURACIÓN - Parametros del Sistema");
                     }
-                });
-                //window.open("reporteresultado?invnum="+id.invnum+"&numitm="+id.numitm+"&medcod="+id.medcod, "_blank");                
+                });                
             }
             function format(d) {
                 let resultado = '';
@@ -374,21 +356,8 @@
                 });
                 resultado = "<table class='table table-striped table-bordered'>" + resultado + "</table>";
                 return (resultado);
-            }
-
-            /*function mostrarDetalle(invnum) {
-             $(document).ready(function () {
-             $("#invnumseleccionado").val(invnum);
-             table1.ajax.reload( );
-             $("#detalleModal").modal("show");
-             });
-             
-             }*/
-
-
-
+            }       
         </script>
-
 
     </body>
 

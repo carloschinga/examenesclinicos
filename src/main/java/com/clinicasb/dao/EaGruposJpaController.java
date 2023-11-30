@@ -30,12 +30,11 @@ public class EaGruposJpaController implements Serializable {
     public EaGruposJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.clinicasb.persis");    
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.clinicasb.persis");
 
     public EaGruposJpaController() {
     }
 
-    
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
@@ -210,21 +209,24 @@ public class EaGruposJpaController implements Serializable {
             em.close();
         }
     }
-     public List<Grupo> listar() {
+
+    public String listar() {
         EntityManager em = getEntityManager();
         try {
-            Query nativeQuery = em.createNativeQuery("select exagrp,desgrp from ea_grupos where estado='S'");
-            List<Grupo> lista = nativeQuery.getResultList();
-            return lista;
-        } 
-        catch(Exception ex){
-            System.out.println(ex.getMessage());
+            String resultado="";
+            Query nativeQuery = em.createNativeQuery(
+                    "select * from ea_grupos for json path");
+            List<String> jsonResult = nativeQuery.getResultList();
+            for (String string : jsonResult) {
+                resultado+=string;
+            }
+ 
+            return resultado;
+        } catch (Exception ex) {
             return null;
-        }
-        finally {
+        } finally {
             em.close();
         }
     }
-    
-    
+
 }
